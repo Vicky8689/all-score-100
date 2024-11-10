@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './table.css';
-import { useLocation } from 'react-router-dom';
 import CustomTable from './CustomTable';  // Import the reusable table component
 
-const paper1data = [
+const paperData = [
   { srNo: 1, topic: 'Units and Measurements', notesType: 'Theory', lectureType: 'Video', testSeries: 'Mock Test' },
   { srNo: 2, topic: 'Mathematical Methods', notesType: 'Theory', lectureType: 'Video', testSeries: 'Mock Test' },
+  { srNo: 3, topic: 'Motion in a Plane', notesType: 'Theory', lectureType: 'Video', testSeries: 'Mock Test' },
   { srNo: 3, topic: 'Motion in a Plane', notesType: 'Theory', lectureType: 'Video', testSeries: 'Mock Test' },
   { srNo: 3, topic: 'Motion in a Plane', notesType: 'Theory', lectureType: 'Video', testSeries: 'Mock Test' },
   { srNo: 3, topic: 'Motion in a Plane', notesType: 'Theory', lectureType: 'Video', testSeries: 'Mock Test' },
@@ -20,30 +20,12 @@ const paper1data = [
   
 ];
 
-const paper2data = [
-  { srNo: 1, topic: 'Sound', notesType: 'Theory', lectureType: 'Video', testSeries: 'Mock Test' },
-  { srNo: 2, topic: 'Optics', notesType: 'Theory', lectureType: 'Video', testSeries: 'Mock Test' },
-  { srNo: 3, topic: 'Electrostatics', notesType: 'Theory', lectureType: 'Video', testSeries: 'Mock Test' },
-  // more data...
-];
-
-const MngTable = () => {
-  const [isPaperOneSelected, setIsPaperOneSelected] = useState(true);
-  const location = useLocation();
-  const { title, option } = location.state || {};  // Get props passed from Subjects
-
-  return (
+const SingleTable = () => (
     <div className="form-container">
       {/* <h2>{title} {option}</h2> Display the title and option */}
-      <div className="tab">
-        <button onClick={() => setIsPaperOneSelected(true)} className={isPaperOneSelected ? 'active' : ''}>Paper I</button>
-        <button onClick={() => setIsPaperOneSelected(false)} className={!isPaperOneSelected ? 'active' : ''}>Paper II</button>
-      </div>
+      
+  <CustomTable data={paperData} />
+  </div>
+);
 
-      {/* Use CustomTable to render the data */}
-      {isPaperOneSelected ? <CustomTable data={paper1data} /> : <CustomTable data={paper2data} />}
-    </div>
-  );
-};
-
-export default MngTable;
+export default SingleTable;
