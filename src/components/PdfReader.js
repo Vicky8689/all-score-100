@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
+
 import { Worker, Viewer } from "@react-pdf-viewer/core";
-import samplePdf from './sample.pdf';
+import samplePdf from './Units and Measurements.pdf';
+import samplePdf1 from './Mathematical Methods.pdf';
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import "./pdfview.css";
@@ -12,7 +15,19 @@ import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 
-export default function PdfViewer({ fileUrl = samplePdf }) {
+export default function PdfViewer({ fileUrl = samplePdf1 }) {
+   
+
+    // calltheapi and render page
+    const { srNo } = useParams();
+    
+    if(srNo%2==0){
+        fileUrl="https://yc9sve.staticfast.com/sample.pdf"
+    }
+
+
+    
+
     const [currentTheme, setCurrentTheme] = useState('light');
     const [currentscreensize, setcurrentscreensize] = useState('off');
     const [showThumbnails, setShowThumbnails] = useState(true);
@@ -23,7 +38,7 @@ export default function PdfViewer({ fileUrl = samplePdf }) {
     const zoomPluginInstance = zoomPlugin(); // Create an instance of the zoom plugin
 
     const { Thumbnails } = thumbnailPluginInstance;
-    const { EnterFullScreen } = fullScreenPluginInstance;
+    
 
     // Toggle theme
     const toggleTheme = () => {

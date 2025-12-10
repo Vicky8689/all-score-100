@@ -1,0 +1,54 @@
+.container {
+    max-width: 1200px;
+  }
+  
+.testimonial-item {
+  background: #e3e0e0; 
+  text-align: left; 
+  border-radius: 10px;
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on background and scale */
+}
+
+.testimonial-item:hover {
+  background: #ffffff; /* Change background color on hover */
+   
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add a shadow effect to lift the item */
+}
+
+  .testimonial-carousel .owl-dots {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  
+  .testimonial-carousel .owl-dot {
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
+    width: 15px;
+    height: 15px;
+    background: #c1dad0;
+    border-radius: 15px;
+    transition: 0.5s;
+  }
+  
+  .testimonial-carousel .owl-dot.active {
+    width: 30px;
+    background: var(--bs-primary);
+  }
+  
+  .testimonial-carousel .owl-item.center .testimonial-item {
+    background: #f40c0c !important;
+    box-shadow: 0 0 30px #dddddd;
+  }
+  
+  .testimonial-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  

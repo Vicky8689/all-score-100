@@ -1,7 +1,9 @@
 import React from 'react';
 import './Subject.css';
-import { Link, useNavigate } from 'react-router-dom';
+//import '../../assets/common.css';
 
+import { Link, useNavigate } from 'react-router-dom';
+import Navbar from '../NavBar/Navbar';
 export default function Subjects() {
   const courseData = [
     { title: 'PHY', options: ['11TH', '12TH'] },
@@ -25,6 +27,8 @@ export default function Subjects() {
   }
   
   return (
+    <>
+    <Navbar/>
     <div className="courses-container">
       {courseData.map((course, index) => (
         <div key={index} className="course-card">
@@ -43,5 +47,6 @@ export default function Subjects() {
         </div>
       ))}
     </div>
+    </>
   );
 }

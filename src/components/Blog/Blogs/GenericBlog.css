@@ -1,0 +1,227 @@
+/* =========================
+   Global Styles
+========================= */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f0f4f8, #d9e4f5);
+  color: #1a1a1a;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Smooth animations everywhere */
+* {
+  transition: all 0.3s ease-in-out;
+}
+
+/* =========================
+   Header
+========================= */
+header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ff4d4d, #ffaf40);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+header p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* =========================
+   Sidebar
+========================= */
+aside {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  padding: 1.2rem;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+aside h4 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #ff4d4d;
+}
+aside nav button {
+  border-radius: 10px;
+  padding: 0.7rem;
+  font-size: 0.95rem;
+}
+aside nav button:hover {
+  background: rgba(255, 77, 77, 0.08);
+  transform: translateX(5px);
+}
+aside nav .bg-sky-100 {
+  background: linear-gradient(90deg, #ff4d4d, #ffaf40);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 6px 15px rgba(255, 77, 77, 0.2);
+}
+
+/* =========================
+   Post Card
+========================= */
+article {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   Hero Image (Small Box)
+========================= */
+article img,
+.w-full.h-56.object-cover {
+  height: 140px !important;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #ff4d4d;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+article img:hover {
+  transform: scale(1.05);
+}
+
+/* =========================
+   Image Row (Small Boxes)
+========================= */
+.image-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px;
+}
+.image-row img {
+  flex: 0 0 auto;
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border: 2px solid #ff4d4d;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+.image-row img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   Gallery Grid
+========================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.gallery-grid img {
+  width: 200px;      /* fixed width */
+  height: 150px;     /* fixed height */
+  object-fit: cover; /* keeps aspect ratio but crops */
+  border-radius: 10px;
+  border: 2px solid #ff4d4d;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+
+/* =========================
+   Highlights
+========================= */
+ul.list-disc li {
+  color: #333;
+  margin-bottom: 0.4rem;
+}
+
+/* =========================
+   Blockquotes
+========================= */
+blockquote {
+  background: linear-gradient(90deg, #fff1f1, #fff7eb);
+  border-left: 6px solid #ff4d4d;
+  padding: 0.8rem 1rem;
+  font-style: italic;
+  color: #7a2e2e;
+  border-radius: 6px;
+}
+
+/* =========================
+   Buttons
+========================= */
+button.bg-sky-600 {
+  background: linear-gradient(90deg, #ff4d4d, #ffaf40);
+  border: none;
+  font-weight: 600;
+  border-radius: 10px;
+}
+button.bg-sky-600:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #e04343, #ff9f1a);
+}
+a.border-sky-600 {
+  border: 2px solid #ff4d4d;
+  color: #ff4d4d;
+  font-weight: 500;
+  border-radius: 10px;
+}
+a.border-sky-600:hover {
+  background: #ff4d4d;
+  color: white;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 768px) {
+  aside {
+    order: 2;
+  }
+  main {
+    order: 1;
+  }
+  article img {
+    height: 120px !important;
+  }
+  .gallery-grid img {
+    height: 80px;
+  }
+  .image-row img {
+    width: 100px;
+    height: 80px;
+  }
+}
+.gallery-img {
+  width: 10px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #ff4d4d;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease-in-out;
+}
+
+.gallery-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}

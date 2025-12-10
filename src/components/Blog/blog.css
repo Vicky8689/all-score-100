@@ -1,0 +1,49 @@
+.blog-btn-icon {
+    display: flex;
+    align-items: center;
+  }
+  
+  .blog-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .blog-btn-icon, .blog-icon {
+    width: 100%;
+  }
+  
+  .blog-btn-icon .blog-icon-1, .blog-btn-icon .blog-icon-2 {
+    width: 100%;
+  }
+  
+  .blog-btn-icon .blog-icon-1 {
+    display: block; /* "Share" text is visible by default */
+  }
+  
+  .blog-btn-icon .blog-icon-2 {
+    display: none; /* Icons are hidden by default */
+    /* transition: opacity 0.3s ease; */
+  }
+  
+  .blog-btn-icon:hover .blog-icon-1 {
+    display: none; /* Hide "Share" text when hovered */
+  }
+  
+  .blog-btn-icon:hover .blog-icon-2 {
+    display: flex; /* Show the icons when hovered */
+  }
+  
+  .blog-btn .btn {
+    /* padding: 10px 20px; Same padding for both buttons */
+  }
+  
+  .blog-btn .btn {
+    display: inline-block;
+    /* padding: 10px 20px;  */
+  }
+  
+  .blog-btn .btn i {
+    margin-right: 5px;
+  }
+  
