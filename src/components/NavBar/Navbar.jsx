@@ -111,8 +111,8 @@ const Navbar = () => {
     id="scienceSubmenu"
     style={{ display: submenuVisible.science ? "block" : "none", paddingLeft: "20px" }}
   >
-    <li><a className="dropdown-item" href="/subjects">State Bord</a></li>
-    <li><a className="dropdown-item" href="/subjects">CBSC</a></li>
+    <li><a className="dropdown-item" href="/courses/:id/subjects">State Bord</a></li>
+    <li><a className="dropdown-item" href="/courses/:id/subjects">CBSC</a></li>
   </ul>
 </li>
 

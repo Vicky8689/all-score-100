@@ -2,19 +2,73 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate hook
 import '../../assets/bootstrap.min.css';
 
+import { loginUser, registerUser } from "../../Services/authService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function AuthTabs() {
+//regiser 
+const [firstName, setFirstName] = useState("");
+const [lastName, setLastName] = useState("");
+const [phoneNo, setPhoneNo] = useState("");
+const [regEmail, setRegEmail] = useState("");
+const [regPassword, setRegPassword] = useState("");
+
+const handleRegister = async (e) => {
+  e.preventDefault();
+
+  try {
+    const userData = {
+      firstName,
+      lastName,
+      phoneNo,
+      email: regEmail,
+      password: regPassword
+    };
+
+    await registerUser(userData);
+
+    toast.success("Registration successful 🎉");
+
+    // reset fields
+    setFirstName("");
+    setLastName("");
+    setPhoneNo("");
+    setRegEmail("");
+    setRegPassword("");
+
+    // switch tab immediately
+    setActiveTab("login");
+
+  } catch (error) {
+    toast.error("User already exists ❌");
+  }
+};
   const [activeTab, setActiveTab] = useState('login');
   const navigate = useNavigate();  // Initialize the navigate function
-
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
   // Handle form submission for login
-  const handleLogin = (e) => {
-    e.preventDefault();  // Prevent the page from refreshing
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    // Authentication logic here (for now, just navigate)
-    navigate('/home');  // Redirect to the /home route after login
-  };
+  try {
+    const result = await loginUser(email, password);
 
-  return (
+    if (result) {
+      toast.success("Login successful 🎉");
+      // setTimeout(() => {
+        navigate("/home");
+      // }, 1500);
+    } else {
+      toast.error("Invalid email or password ❌");
+    }
+  } catch (error) {
+    toast.error("Login failed. Please try again ⚠️");
+  }
+};
+
+  return (<div>
+    
     <div className="d-flex align-items-center justify-content-center vh-100" style={{ backgroundColor: '#e0f7fa' }}>
       <div className="container p-4 shadow bg-white rounded" style={{ maxWidth: '450px' }}>
         {/* Tab Navigation */}
@@ -46,19 +100,23 @@ function AuthTabs() {
                 <h4 className="mb-3 text-center">Welcome Back</h4>
 
                 <div className="form-group mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="UserId / Phone Number or Email"
-                  />
+                 <input
+  type="text"
+  className="form-control"
+  placeholder="Email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
                 </div>
 
                 <div className="form-group mb-3">
                   <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Password"
-                  />
+  type="password"
+  className="form-control"
+  placeholder="Password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+/>
                 </div>
 
                 <div className="d-flex justify-content-between align-items-center mb-3">
@@ -94,28 +152,53 @@ function AuthTabs() {
           {/* Register Form */}
           {activeTab === 'register' && (
             <div className="tab-pane fade show active">
-              <form>
+           <form onSubmit={handleRegister}>
                 <h4 className="mb-3 text-center">Create Account</h4>
 
                 <div className="form-group mb-3">
-                  <input type="text" className="form-control" placeholder="First Name" />
-                </div>
+                 <input
+  type="text"
+  className="form-control"
+  placeholder="First Name"
+  value={firstName}
+  onChange={(e) => setFirstName(e.target.value)}
+/></div>
 
                 <div className="form-group mb-3">
-                  <input type="text" className="form-control" placeholder="Last Name" />
-                </div>
+<input
+  type="text"
+  className="form-control"
+  placeholder="Last Name"
+  value={lastName}
+  onChange={(e) => setLastName(e.target.value)}
+/>                </div>
 
                 <div className="form-group mb-3">
-                  <input type="tel" className="form-control" placeholder="Phone Number" />
-                </div>
+<input
+  type="tel"
+  className="form-control"
+  placeholder="Phone Number"
+  value={phoneNo}
+  onChange={(e) => setPhoneNo(e.target.value)}
+/>                </div>
 
                 <div className="form-group mb-3">
-                  <input type="email" className="form-control" placeholder="Email" />
-                </div>
+<input
+  type="email"
+  className="form-control"
+  placeholder="Email"
+  value={regEmail}
+  onChange={(e) => setRegEmail(e.target.value)}
+/>                </div>
 
                 <div className="form-group mb-3">
-                  <input type="password" className="form-control" placeholder="Password" />
-                </div>
+<input
+  type="password"
+  className="form-control"
+  placeholder="Password"
+  value={regPassword}
+  onChange={(e) => setRegPassword(e.target.value)}
+/>                </div>
 
                 <div className="form-check mb-3 text-center">
                   <input
@@ -149,6 +232,9 @@ function AuthTabs() {
         </div>
       </div>
     </div>
+    <ToastContainer position="top-right" autoClose={3000} />
+    
+  </div>
   );
 }
 

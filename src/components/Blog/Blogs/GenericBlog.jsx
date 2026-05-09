@@ -35,9 +35,9 @@ function PostCard({ post }) {
   return (
     <article className="bg-white rounded-lg p-6 shadow-md">
       <Hero post={post} />
-      {post.content && (
+      {post.blogContent && (
         <section className="prose max-w-none mb-4">
-          {post.content.split('\n\n').map((para, idx) => (
+          {post.blogContent.split('\n\n').map((para, idx) => (
             <p key={idx}>{para}</p>
           ))}
         </section>
@@ -47,16 +47,16 @@ function PostCard({ post }) {
         <>
           <h3 className="font-semibold mt-4">Highlights</h3>
           <ul className="list-disc ml-6 mb-4">
-            {post.highlights.map((h, i) => (
-              <li key={i}>{h}</li>
-            ))}
+           {post.highlights.map((h, i) => (
+  <li key={i}>{h.text}</li>
+))}
           </ul>
         </>
       )}
 
       <Gallery images={post.gallery} />
 
-      {post.video && (
+      {/* {post.video && (
         <div className="my-4">
           <h4 className="font-medium">Event Video</h4>
           <div className="mt-2 aspect-video">
@@ -68,15 +68,15 @@ function PostCard({ post }) {
             />
           </div>
         </div>
-      )}
+      )} */}
 
       {post.quotes?.length > 0 && (
         <div className="mt-6">
           <h4 className="font-medium">Voices</h4>
           <div className="mt-2 space-y-2">
             {post.quotes.map((q, i) => (
-              <blockquote key={i} className="border-l-4 pl-4 italic text-gray-700">{q}</blockquote>
-            ))}
+  <blockquote key={i}>{q.text}</blockquote>
+))}
           </div>
         </div>
       )}
@@ -101,17 +101,20 @@ function PostCard({ post }) {
   );
 }
 
-export default function GenericBlog({ posts = [], title = "Blog", description = "" }) {
-  const [selected, setSelected] = useState(posts[0]?.id || null);
-  const current = posts.find((p) => p.id === selected) || posts[0] || {};
-  if (!posts.length) return <div className="p-6">No posts available.</div>;
+export default function GenericBlog({ posts ={}, title = "Blog", description = "" }) {
+  // const [selected, setSelected] = useState(posts?.id || null);
+  const current = posts ;
+  console.log("posts:", posts);
+console.log("type:", typeof posts);
+console.log("isArray:", Array.isArray(posts));
+  if (!posts) return <div className="p-6">No posts available.</div>;
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-12">
       <div className="max-w-5xl mx-auto">
-        <header className="mb-8">
+        {/* <header className="mb-8">
           <h2 className="text-3xl font-extrabold">{title}</h2>
           {description && <p className="text-gray-600 mt-2">{description}</p>}
-        </header>
+        </header> */}
         <div className="flex flex-col md:flex-row gap-6">
           <main className="flex-1">
             <PostCard post={current} />

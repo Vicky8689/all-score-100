@@ -3,17 +3,15 @@ import "../../assets/common.css";
 
 const SuccessStories = () => {
   const successStories = [
-    {
-      img: "img/Success1.jpg",
-      title: "Vicky Yadav",
-      desc: "Batch 2015-16 \n Rank: 1 (CBSE) \n STD: 12",
-    },
-    { img: "img/Success2.jpg", title: "Cyber Security", desc: "Cyber Security Core" },
-    { img: "img/Success3.jpg", title: "Mobile Info", desc: "Upcoming Phone" },
-    { img: "img/Success4.jpg", title: "Web Development", desc: "Web Analysis" },
-    { img: "img/Success5.jpg", title: "Digital Marketing", desc: "Marketing Analysis" },
-    { img: "img/Success6.jpg", title: "Keyword Research", desc: "Keyword Analysis" },
-    { img: "img/Success6.jpg", title: "Vicky Research", desc: "Keyword Analysis" },
+    {id:1,blogId:12, img: "img/Success1.jpg", title: "Vicky Yadav",
+      desc: "Batch 2015-16 \n Rank: 1 (CBSE) \n STD: 12",},
+    {id:2,blogId:2, img: "img/Success3.jpg", title: "Mobile Info", desc: "Upcoming Phone" },
+    {id:3,blogId:3, img: "img/Success2.jpg", title: "Cyber Security", desc: "Cyber Security Core" },
+    {id:4,blogId:4, img: "img/Success2.jpg", title: "Cyber Security2", desc: "Cyber Security Core2" },
+    {id:6,blogId:9, img: "img/Success5.jpg", title: "Digital Marketing", desc: "Marketing Analysis" },
+    {id:5,blogId:10, img: "img/Success4.jpg", title: "Web Development", desc: "Web Analysis" },
+    {id:7,blogId:22, img: "img/Success6.jpg", title: "Keyword Research", desc: "Keyword Analysis" },
+    {id:8,blogId:11, img: "img/Success6.jpg", title: "Vicky Research", desc: "Keyword Analysis" },
   ];
 
   return (

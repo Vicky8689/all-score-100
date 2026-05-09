@@ -1,7 +1,7 @@
 import React from 'react';
 //import './blog.css';
 import '../../assets/common.css';
-
+import { Link } from 'react-router-dom';
 
 const Blog = () => {
   const blogs = [
@@ -66,9 +66,9 @@ const Blog = () => {
                   style={{ marginTop: '-75px' }}
                 >
                   <div className="blog-icon btn btn-secondary px-3 py-2 rounded-pill my-auto">
-                    <a href="/BlogPage" className="btn text-white">
-                      Read More
-                    </a>
+                  <Link to={`/BlogPage/${blog.id}`} className="btn text-white">
+  Read More
+</Link>
                   </div>
                   <div className="blog-btn-icon btn btn-secondary px-3 py-2 rounded-pill my-auto">
                     <div className="blog-icon-1">

@@ -1,111 +1,92 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../assets/bootstrap.min.css";
 import AOS from "aos";
-import "aos/dist/aos.css"; // Import AOS styles
+import "aos/dist/aos.css";
 
 import Navbar from "../NavBar/Navbar";
-import SuccessStories from "../SuccessStories/SuccessStories"
-// import Courses from "../CourseCard/CourseCard ";
+import SuccessStories from "../SuccessStories/SuccessStories";
 import Services from "../CourseCard/Services";
 import Blog from "../Blog/Blog";
 import Team from "../Team/Team";
-import Testimonial from "../Testimonial/Testimonial"
-import Contact from "../Contact/Contact"
-import Footer from "../Footer/Footer"
-import About from "../About/About"
-import CustomCarousel from "../CustomCarousel/CustomCarousel"
+import Testimonial from "../Testimonial/Testimonial";
+import Contact from "../Contact/Contact";
+import Footer from "../Footer/Footer";
+import About from "../About/About";
+import CustomCarousel from "../CustomCarousel/CustomCarousel";
+
+import { getFacts } from "../../Services/commonService";
+
 const Index = () => {
+
+  const [facts, setFacts] = useState([]);
+
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Animation duration
-      once: true, // Whether animation runs only once
+      duration: 1000,
+      once: true,
     });
+
+    fetchFacts();
   }, []);
+
+  const fetchFacts = async () => {
+    try {
+      const data = await getFacts();
+      setFacts(data);
+    } catch (error) {
+      console.error("Error loading facts:", error);
+    }
+  };
 
   return (
     <>
       <Navbar />
+
       {/* image */}
       <CustomCarousel />
 
-      {/* Scroll Animation Section facts*/}
+      {/* Facts Section */}
       <div className="container-fluid bg-secondary py-5">
         <div className="container">
           <div className="row">
-            {/* Fact 1 */}
-            <div
-              className="col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <div className="d-flex counter">
-                <h1 className="me-3 text-primary">100+</h1>
-                <h5 className="text-white mt-1">
-                  Students successfully placed in best engineering and medical
-                  colleges across Mumbai and Navi Mumbai.
-                </h5>
-              </div>
-            </div>
 
-            {/* Fact 2 */}
-            <div
-              className="col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <div className="d-flex counter">
-                <h1 className="me-3 text-primary">9+</h1>
-                <h5 className="text-white mt-1">
-                  Years of educational mastery, a journey of knowledge,
-                  discovery, and growth.
-                </h5>
-              </div>
-            </div>
+            {facts.map((fact, index) => (
 
-            {/* Fact 3 */}
-            <div
-              className="col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              <div className="d-flex counter">
-                <h1 className="me-3 text-primary">9000+</h1>
-                <h5 className="text-white mt-1">
-                  Students who loved ALL SCORES 100 Education Center.
-                </h5>
-              </div>
-            </div>
+              <div
+                className="col-lg-3"
+                key={fact.factId}
+                data-aos="fade-up"
+                data-aos-delay={(index + 1) * 100}
+              >
 
-            {/* Fact 4 */}
-            <div
-              className="col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="400"
-            >
-              <div className="d-flex counter">
-                <h1 className="me-3 text-primary">5</h1>
-                <h5 className="text-white mt-1">
-                  Stars reviews given by satisfied students and parents.
-                </h5>
+                <div className="d-flex counter">
+
+                  <h1 className="me-3 text-primary">
+                    {fact.title}
+                  </h1>
+
+                  <h5 className="text-white mt-1">
+                    {fact.description}
+                  </h5>
+
+                </div>
+
               </div>
-            </div>
+
+            ))}
+
           </div>
         </div>
       </div>
 
       <About />
       <Services />
-
       <SuccessStories />
-
       <Blog />
-
       <Team />
-
       <Testimonial />
       <Contact />
       <Footer />
-
     </>
   );
 };

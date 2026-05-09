@@ -12,9 +12,10 @@ import OurTeam from './Pages/OurTeam';
 import VideoPage from './Pages/VideosPage';
 import AuthTabs from "./components/AuthTabs/AuthTabs";
 import BlogPage from "./Pages/BlogPage/BlogPage"
+import AddCourse from "./components/Admin/Course/AddCourse";
 const routes = createBrowserRouter([
   { path: "/home", element: <Index /> },
-  { path: "/subjects", element: <Subjects /> },
+{ path: "/courses/:courseId/subjects", element: <Subjects /> },
   { path: "/tables", element: <MngTable /> },
   { path: "/table", element: <SingleTable /> },
   { path: "/pdf/:srNo", element: <PdfViewer /> },
@@ -25,7 +26,8 @@ const routes = createBrowserRouter([
   { path: "/ourblog", element: <OurBlog /> },
   { path: "/videos", element: <VideoPage /> },
   {path : "/" , element:<AuthTabs/>},
-   {path:"/BlogPage",element:<BlogPage/>}
+   {path:"/BlogPage/:blogId",element:<BlogPage/>},
+   {path:"/Admin/AddCourse",element:<AddCourse/>}
 ]);
 
 export default routes;
