@@ -200,17 +200,17 @@ const Navbar = () => {
                   </a>
                   <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <li>
-                      <NavLink className="dropdown-item" to="/OurTeam">
+                      <NavLink className="dropdown-item" to="/our-team">
                         Our Team
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink className="dropdown-item" to="/OurTestimonial">
+                      <NavLink className="dropdown-item" to="/testimonials">
                         Our Testimonial
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink className="dropdown-item" to="/OurBlog">
+                      <NavLink className="dropdown-item" to="/blogs">
                         Our Blog
                       </NavLink>
                     </li>

@@ -18,7 +18,7 @@ const ContactPage = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       {/* Image */}
       <CustomCarousel />
 

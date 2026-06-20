@@ -1,65 +1,145 @@
 import React from "react";
-import "../../assets/common.css";
+import "./SuccessStories.css";
 
 const SuccessStories = () => {
+
   const successStories = [
-    {id:1,blogId:12, img: "img/Success1.jpg", title: "Vicky Yadav",
-      desc: "Batch 2015-16 \n Rank: 1 (CBSE) \n STD: 12",},
-    {id:2,blogId:2, img: "img/Success3.jpg", title: "Mobile Info", desc: "Upcoming Phone" },
-    {id:3,blogId:3, img: "img/Success2.jpg", title: "Cyber Security", desc: "Cyber Security Core" },
-    {id:4,blogId:4, img: "img/Success2.jpg", title: "Cyber Security2", desc: "Cyber Security Core2" },
-    {id:6,blogId:9, img: "img/Success5.jpg", title: "Digital Marketing", desc: "Marketing Analysis" },
-    {id:5,blogId:10, img: "img/Success4.jpg", title: "Web Development", desc: "Web Analysis" },
-    {id:7,blogId:22, img: "img/Success6.jpg", title: "Keyword Research", desc: "Keyword Analysis" },
-    {id:8,blogId:11, img: "img/Success6.jpg", title: "Vicky Research", desc: "Keyword Analysis" },
+
+    {
+      id: 1,
+      img: "img/Success1.jpg",
+      name: "Vicky Yadav",
+      rank: "AIR 1",
+      exam: "CBSE Topper",
+      year: "Batch 2015-16",
+      score: "98.8%"
+    },
+
+    {
+      id: 2,
+      img: "img/Success2.jpg",
+      name: "Rahul Sharma",
+      rank: "AIR 56",
+      exam: "NEET 2025",
+      year: "Batch 2024-25",
+      score: "715/720"
+    },
+
+    {
+      id: 3,
+      img: "img/Success3.jpg",
+      name: "Priya Verma",
+      rank: "AIR 103",
+      exam: "JEE Advanced",
+      year: "Batch 2024",
+      score: "99.4 Percentile"
+    },
+
   ];
 
   return (
-    <div className="container-fluid project py-5 mb-5">
+
+    <section className="modern-success-section">
+
       <div className="container">
-        <div
-          className="text-center mx-auto pb-5 wow fadeIn"
-          data-wow-delay=".3s"
-          style={{ maxWidth: "600px" }}
-        >
-          <h5 className="text-primary">Success Stories</h5>
-          <h2>
-            Fueling success stories through our completed batches and
-            accomplished students.
-          </h2>
+
+        {/* HEADER */}
+        <div className="success-header">
+
+          <span>
+            SUCCESS STORIES
+          </span>
+
+          <h1>
+            Our Toppers Make Us Proud
+          </h1>
+
+          <p>
+            Thousands of students have achieved
+            exceptional ranks and fulfilled
+            their dreams with ALL SCORES 100.
+          </p>
+
         </div>
 
-        <div className="row g-5">
-          {successStories.map((story, index) => (
+        {/* CARDS */}
+        <div className="success-grid">
+
+          {successStories.map((story) => (
+
             <div
-              key={index}
-              className="col-md-6 col-lg-4 wow fadeIn"
-              data-wow-delay={`${0.3 + index * 0.2}s`}
+              className="success-card"
+              key={story.id}
             >
-              <div className="project-item text-center">
-                {/* Image with hover effect */}
-                <div className="project-img">
-                  <img
-                    src={story.img}
-                    className="img-fluid w-100 rounded"
-                    alt={story.title}
-                    style={{ height: "15rem", objectFit: "cover" }}
-                  />
-                  
-                
+
+              {/* IMAGE */}
+              <div className="success-image-wrapper">
+
+                <img
+                  src={story.img}
+                  alt={story.name}
+                  className="success-image"
+                />
+
+                <div className="success-overlay">
+
+                  <div className="overlay-content">
+
+                    <h3>{story.rank}</h3>
+
+                    <p>{story.exam}</p>
+
+                  </div>
+
                 </div>
 
-                {/* Title + Description always outside image */}
-                <div className="project-info">
-                  <h4>{story.title}</h4>
-                  <p>{story.desc}</p>
-                </div>
               </div>
+
+              {/* CONTENT */}
+              <div className="success-content">
+
+                <h2>
+                  {story.name}
+                </h2>
+
+                <div className="success-meta">
+
+                  <div className="meta-box">
+
+                    <span>Batch</span>
+
+                    <h4>{story.year}</h4>
+
+                  </div>
+
+                  <div className="meta-box">
+
+                    <span>Score</span>
+
+                    <h4>{story.score}</h4>
+
+                  </div>
+
+                </div>
+
+                <button className="success-btn">
+
+                  View Journey →
+
+                </button>
+
+              </div>
+
             </div>
+
           ))}
+
         </div>
+
       </div>
-    </div>
+
+    </section>
+
   );
 };
 

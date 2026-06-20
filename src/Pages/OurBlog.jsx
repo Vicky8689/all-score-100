@@ -11,7 +11,7 @@ const OurBlog=()=>{
 
     return(
         <>
-        <Navbar />
+        {/* <Navbar /> */}
          {/* image */}
       <CustomCarousel />
 

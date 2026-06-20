@@ -26,7 +26,7 @@ const BlogPage = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <GenericBlog
         posts={postsData}

@@ -1,33 +1,120 @@
 import { createBrowserRouter } from "react-router-dom";
-import PdfViewer from './components/PdfReader';
-import Subjects from './components/subjects/Subjects';
-import MngTable from './components/Tables/Table';
-import SingleTable from './components/Tables/SingleTable';
-import Index from './components/LandingPage/index';
-import ContactPage from './Pages/ConTactPage';
-import AboutPage from './Pages/AboutPage';
-import OurBlog from './Pages/OurBlog';
+
+
+
+import Index from "./components/LandingPage/index";
+import Subjects from "./components/subjects/Subjects";
+import SingleTable from "./components/Tables/SingleTable";
+
+
+import AboutPage from "./Pages/AboutPage";
+import ContactPage from "./Pages/ConTactPage";
+
+import OurBlog from "./Pages/OurBlog";
+import BlogPage from "./Pages/BlogPage/BlogPage";
+
+import OurTeam from "./Pages/OurTeam";
 import OurTestimonial from "./Pages/OurTestimonial";
-import OurTeam from './Pages/OurTeam';
-import VideoPage from './Pages/VideosPage';
+
+import VideoPage from "./Pages/VideosPage";
+
+import MockTest from "./components/MokTest/MockTest";
+
 import AuthTabs from "./components/AuthTabs/AuthTabs";
-import BlogPage from "./Pages/BlogPage/BlogPage"
+
 import AddCourse from "./components/Admin/Course/AddCourse";
+import MainLayout from "./Pages/MainLayout";
+import PdfViewer from "./components/PDF/PdfReader";
+import ResultPage from "./Pages/ResultPage";
+
 const routes = createBrowserRouter([
-  { path: "/home", element: <Index /> },
-{ path: "/courses/:courseId/subjects", element: <Subjects /> },
-  { path: "/tables", element: <MngTable /> },
-  { path: "/table", element: <SingleTable /> },
-  { path: "/pdf/:srNo", element: <PdfViewer /> },
-  { path: "/about", element: <AboutPage /> },
-  { path: "/contact", element: <ContactPage /> },
-  { path: "/ourteam", element: <OurTeam /> },
-  { path: "/ourtestimonial", element: <OurTestimonial /> },
-  { path: "/ourblog", element: <OurBlog /> },
-  { path: "/videos", element: <VideoPage /> },
-  {path : "/" , element:<AuthTabs/>},
-   {path:"/BlogPage/:blogId",element:<BlogPage/>},
-   {path:"/Admin/AddCourse",element:<AddCourse/>}
+
+  /* AUTH */
+  {
+    path: "/",
+    element: <AuthTabs />,
+  },
+
+  /* MAIN WEBSITE LAYOUT */
+  {
+    element: <MainLayout />,
+
+    children: [
+
+      {
+        path: "/home",
+        element: <Index />,
+      },
+
+      {
+        path: "/about",
+        element: <AboutPage />,
+      },
+
+      {
+        path: "/contact",
+        element: <ContactPage />,
+      },
+
+      {
+        path: "/our-team",
+        element: <OurTeam />,
+      },
+
+      {
+        path: "/testimonials",
+        element: <OurTestimonial />,
+      },
+
+      {
+        path: "/blogs",
+        element: <OurBlog />,
+      },
+
+      {
+        path: "/blog/:blogId",
+        element: <BlogPage />,
+      },
+
+      {
+        path: "/courses/:courseId/subjects",
+        element: <Subjects />,
+      },
+
+      {
+        path: "/courses/:courseId/chapters",
+        element: <SingleTable />,
+      },
+
+      {
+        path: "/pdf/:optionTopicId/:srNo",
+        element: <PdfViewer />
+      },
+
+      {
+        path: "/videos",
+        element: <VideoPage />,
+      },
+
+      {
+        path: "/mock-test/:testId",
+        element: <MockTest />,
+      },
+      {
+        path: "/result",
+        element: <ResultPage />,
+      }
+
+
+    ],
+  },
+
+  /* ADMIN */
+  {
+    path: "/admin/add-course",
+    element: <AddCourse />,
+  },
+
 ]);
 
 export default routes;

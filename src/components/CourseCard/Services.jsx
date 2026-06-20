@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./Services.css";
 import { getCourses } from "../../Services/commonService";
 import { useNavigate } from "react-router-dom";
+
 const CourseList = () => {
 
   const [courses, setCourses] = useState([]);
-const navigate = useNavigate();
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetchCourses();
   }, []);
@@ -20,35 +22,107 @@ const navigate = useNavigate();
   };
 
   return (
-    <>
-      <div className="text-center mx-auto pb-5" style={{ maxWidth: "600px" }}>
-        <h5 className="text-primary">Our Courses</h5>
-        <h1>Courses Built Specifically For Your Career</h1>
+    <div className="courses-wrapper">
+
+      {/* SECTION HEADER */}
+      <div className="course-heading">
+
+        <span className="course-subtitle">
+          OUR COURSES
+        </span>
+
+        <h2>
+          Courses Built Specifically
+          For Your Career
+        </h2>
+
+        <p>
+          Structured learning paths for NEET,
+          JEE & MHT-CET preparation.
+        </p>
+
       </div>
 
-      <div className="services">
-        {courses.map((course) => (
-          <div className="services-item" key={course.courseId}>
-            <div className="services-content">
+      {/* COURSE GRID */}
+      <div className="course-grid">
 
-              <div className="services-content-icon">
-                <i className="fas fa-book"></i>
+        {courses.map((course, index) => (
+
+          <div
+            className="modern-course-card"
+            key={course.courseId}
+            data-aos="fade-up"
+            data-aos-delay={(index + 1) * 100}
+          >
+
+            {/* TOP GRADIENT */}
+            <div className="card-top">
+
+              <div className="course-icon">
+                <i className="fas fa-graduation-cap"></i>
               </div>
 
-              <h4>{course.title}</h4>
-              <p>{course.description}</p>
-
-              <button className="btn btn-secondary rounded-pill px-5 py-3 text-white"
-              onClick={()=>navigate(`/courses/${course.courseId}/subjects`)}
-              >
-                Read More
-              </button>
+              <span className="course-badge">
+                Popular
+              </span>
 
             </div>
+
+            {/* CONTENT */}
+            <div className="course-content">
+
+              <h3>
+                {course.title}
+              </h3>
+
+              <p>
+                {course.description}
+              </p>
+
+              {/* FEATURES */}
+              <div className="course-features">
+
+                <div className="feature">
+                  📚 Notes
+                </div>
+
+                <div className="feature">
+                  🎥 Videos
+                </div>
+
+                <div className="feature">
+                  📝 Tests
+                </div>
+
+              </div>
+
+              {/* FOOTER */}
+              <div className="course-footer">
+
+                <div className="students">
+                  500+ Students
+                </div>
+
+                <button
+                  className="explore-btn"
+                  onClick={() =>
+                    navigate(`/courses/${course.courseId}/subjects`)
+                  }
+                >
+                  Explore →
+                </button>
+
+              </div>
+
+            </div>
+
           </div>
+
         ))}
+
       </div>
-    </>
+
+    </div>
   );
 };
 

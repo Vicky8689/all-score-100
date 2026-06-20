@@ -40,7 +40,7 @@ const Index = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       {/* image */}
       <CustomCarousel />
@@ -86,7 +86,7 @@ const Index = () => {
       <Team />
       <Testimonial />
       <Contact />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

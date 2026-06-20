@@ -12,7 +12,7 @@ const OurTestimonial=()=>{
     return(
         
         <>
-        <Navbar />
+        {/* <Navbar /> */}
          {/* image */}
       <CustomCarousel />
 

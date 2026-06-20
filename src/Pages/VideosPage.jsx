@@ -10,7 +10,7 @@ const VideoPage=()=>{
 
     return(
         <>
-         <Navbar />
+         {/* <Navbar /> */}
          <VideoGallery/>
       {/* <Footer /> */}
         </>

@@ -40,13 +40,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const CustomTable = ({ data }) => {
   const navigate = useNavigate();
 
-  const handleNotesTypeClick = (srNo) => {
-    navigate(`/pdf/${srNo}`);
+  const handleNotesTypeClick = (row) => {
+    console.log(row);
+navigate(`/pdf/${row.id}/${row.srNo}`);
   };
 const handleVideoTypeClick =(srNo)=>{
   console.log(srNo);
     navigate("/videos",{ state: { paperData: data } });
 }
+const handleTestClick = (row) => {
+  console.log(row);
+  navigate(`/mock-test/${row.id}`);
+};
 
   return (
     <TableContainer component={Paper}>
@@ -70,7 +75,7 @@ const handleVideoTypeClick =(srNo)=>{
               <StyledTableCell 
                 align="left"
                 style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
-                onClick={() => handleNotesTypeClick(row.srNo)}
+                onClick={() => handleNotesTypeClick(row)}
               >
                 {row.notesType}
               </StyledTableCell>
@@ -78,7 +83,13 @@ const handleVideoTypeClick =(srNo)=>{
                 align="left"
                 style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
                 onClick={() => handleVideoTypeClick(row.srNo)}>{row.lectureType}</StyledTableCell>
-              <StyledTableCell align="left">{row.testSeries}</StyledTableCell>
+             <StyledTableCell
+  align="left"
+  style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
+  onClick={() => handleTestClick(row)}
+>
+  {row.testSeries}
+</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

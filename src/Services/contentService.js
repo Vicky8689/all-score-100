@@ -11,3 +11,13 @@ export const GetBySubjectOptionById = async (optionId) => {
     throw error;
   }
 };
+
+export const getNotesPdf = async (optionTopicId, srNo) => {
+  try {
+    const response = await axios.get(`${API_URL}/LecturePdf/${optionTopicId}/${srNo}`);
+    return response.data; 
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

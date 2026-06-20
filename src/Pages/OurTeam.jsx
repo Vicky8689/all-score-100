@@ -12,7 +12,7 @@ const OurTeam=()=>{
     return(
         
         <>
-        <Navbar />
+        {/* <Navbar /> */}
          {/* image */}
       <CustomCarousel />
 

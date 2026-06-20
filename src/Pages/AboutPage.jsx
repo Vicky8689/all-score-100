@@ -10,7 +10,7 @@ const AboutPage=()=>{
 
     return(
         <>
-         <Navbar />
+         {/* <Navbar /> */}
       {/* image */}
       <CustomCarousel />
 

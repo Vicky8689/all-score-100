@@ -69,7 +69,7 @@ const MngTable = () => {
 
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className="form-container">
       {/* <h2>{title} {option}</h2> Display the title and option */}
       <div className="tab">
