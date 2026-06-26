@@ -7,6 +7,9 @@ import './Navbar.css';
 
 import AdmissionForm from "../AdmissionForm/AdmissionForm";
 
+const getNavLinkClass = ({ isActive }) =>
+  `nav-item nav-link${isActive ? " active-link" : ""}`;
+
 const Navbar = () => {
   const [submenuVisible, setSubmenuVisible] = useState({
     science: false,
@@ -80,10 +83,10 @@ const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse bg-transparent" id="navbarCollapse">
               <div className="navbar-nav ms-auto mx-xl-auto p-0 d-flex justify-content-center align-items-center">
-                <NavLink to="/home" className="nav-item nav-link" activeClassName="active-link">
+                <NavLink to="/home" className={getNavLinkClass}>
                   Home
                 </NavLink>
-                <NavLink to="/about" className="nav-item nav-link" activeClassName="active-link">
+                <NavLink to="/about" className={getNavLinkClass}>
                   About
                 </NavLink>
                 <div className="dropdown">
@@ -153,7 +156,7 @@ const Navbar = () => {
                   </ul>
                 </div>
 
-                <NavLink to="/notes" className="nav-item nav-link" activeClassName="active-link">
+                <NavLink to="/notes" className={getNavLinkClass}>
                   Notes
                 </NavLink>
                 <div className="dropdown">
@@ -218,7 +221,7 @@ const Navbar = () => {
                 </div>
 
 
-                <NavLink to="/contact" className="nav-item nav-link" activeClassName="active-link">
+                <NavLink to="/contact" className={getNavLinkClass}>
                   Contact
                 </NavLink>
               </div>
