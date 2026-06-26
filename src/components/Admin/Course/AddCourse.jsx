@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../../Services/api";
 
 const AddCourse = () => {
   const [course, setCourse] = useState({
@@ -89,7 +89,7 @@ const AddCourse = () => {
   // ================= SUBMIT API =================
   const handleSubmit = async () => {
     try {
-      const res = await axios.post(
+      const res = await api.post(
         "https://localhost:7010/api/Courses/add",
         course,
         {

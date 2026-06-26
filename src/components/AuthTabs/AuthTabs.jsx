@@ -54,13 +54,12 @@ const handleLogin = async (e) => {
   try {
     const result = await loginUser(email, password);
 
-    if (result) {
+    if (result && result.statusCode === 200) {
       toast.success("Login successful 🎉");
-      // setTimeout(() => {
-        navigate("/home");
-      // }, 1500);
+      localStorage.setItem("user", JSON.stringify(result.data));
+      navigate("/home");
     } else {
-      toast.error("Invalid email or password ❌");
+      toast.error(result?.message || "Invalid email or password ❌");
     }
   } catch (error) {
     toast.error("Login failed. Please try again ⚠️");

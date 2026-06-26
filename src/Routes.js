@@ -17,15 +17,14 @@ import OurTeam from "./Pages/OurTeam";
 import OurTestimonial from "./Pages/OurTestimonial";
 
 import VideoPage from "./Pages/VideosPage";
-
-import MockTest from "./components/MokTest/MockTest";
-
 import AuthTabs from "./components/AuthTabs/AuthTabs";
-
 import AddCourse from "./components/Admin/Course/AddCourse";
 import MainLayout from "./Pages/MainLayout";
 import PdfViewer from "./components/PDF/PdfReader";
-import ResultPage from "./Pages/ResultPage";
+import MockTestStartPage from "./Pages/MockTest/MockTestStartPage";
+import MockTestPage from "./Pages/MockTest/MockTestPage";
+import MockTestResultPage from "./Pages/MockTest/ResultPage";
+import SolutionReviewPage from "./Pages/MockTest/SolutionReviewPage";
 
 const routes = createBrowserRouter([
 
@@ -98,11 +97,19 @@ const routes = createBrowserRouter([
 
       {
         path: "/mock-test/:testId",
-        element: <MockTest />,
+        element: <MockTestStartPage />,
       },
       {
-        path: "/result",
-        element: <ResultPage />,
+        path: "/mock-test/:testId/run",
+        element: <MockTestPage />,
+      },
+      {
+        path: "/mock-test/:testId/result/:attemptId",
+        element: <MockTestResultPage />,
+      },
+      {
+        path: "/mock-test/:testId/solutions",
+        element: <SolutionReviewPage />,
       }
 
 
