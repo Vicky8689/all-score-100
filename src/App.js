@@ -1,5 +1,8 @@
 import {  RouterProvider } from "react-router-dom";
 import routes from "./Routes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const App = () => {
  
 
@@ -7,6 +10,7 @@ const App = () => {
     <div>
         
        <RouterProvider router={routes} />
+       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
