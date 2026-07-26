@@ -19,14 +19,18 @@ import OurTestimonial from "./Pages/OurTestimonial";
 import VideoPage from "./Pages/VideosPage";
 import AuthTabs from "./components/AuthTabs/AuthTabs";
 import AddCourse from "./components/Admin/Course/AddCourse";
+import AppShell from "./Pages/AppShell";
 import MainLayout from "./Pages/MainLayout";
 import PdfViewer from "./components/PDF/PdfReader";
 import MockTestStartPage from "./Pages/MockTest/MockTestStartPage";
 import MockTestPage from "./Pages/MockTest/MockTestPage";
 import MockTestResultPage from "./Pages/MockTest/ResultPage";
 import SolutionReviewPage from "./Pages/MockTest/SolutionReviewPage";
-
+import CreateExam from "./components/Admin/Exame/CreateExam";
 const routes = createBrowserRouter([
+  {
+    element: <AppShell />,
+    children: [
 
   /* AUTH */
   {
@@ -91,7 +95,7 @@ const routes = createBrowserRouter([
       },
 
       {
-        path: "/videos",
+        path: "/videos/:optionTopicId",
         element: <VideoPage />,
       },
 
@@ -121,7 +125,13 @@ const routes = createBrowserRouter([
     path: "/admin/add-course",
     element: <AddCourse />,
   },
+  {
+        path: "admin/exams/create-from-excel",
+        element: <CreateExam />,
+      },
 
+    ],
+  },
 ]);
 
 export default routes;

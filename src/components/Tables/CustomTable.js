@@ -44,9 +44,9 @@ const CustomTable = ({ data }) => {
     console.log(row);
 navigate(`/pdf/${row.id}/${row.srNo}`);
   };
-const handleVideoTypeClick =(srNo)=>{
-  console.log(srNo);
-    navigate("/videos",{ state: { paperData: data } });
+const handleVideoTypeClick =(row)=>{
+  console.log(row);
+    navigate(`/videos/${row.id}`);
 }
 const handleTestClick = (row) => {
   console.log(row);
@@ -82,7 +82,7 @@ const handleTestClick = (row) => {
               <StyledTableCell 
                 align="left"
                 style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
-                onClick={() => handleVideoTypeClick(row.srNo)}>{row.lectureType}</StyledTableCell>
+                onClick={() => handleVideoTypeClick(row)}>{row.lectureType}</StyledTableCell>
              <StyledTableCell
   align="left"
   style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}

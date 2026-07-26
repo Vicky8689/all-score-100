@@ -25,11 +25,13 @@ const AuthPopup = () => {
     const handleLogin = () => {
         setVisible(false);
         // Clear stale user data
+        localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/");
     };
     const handleRegister = () => {
         setVisible(false);
+        localStorage.removeItem("token");
         localStorage.removeItem("user");
         // Navigate to auth page — the register tab can be pre-selected
         // by passing state that AuthTabs can read

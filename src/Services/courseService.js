@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const API_URL = "https://localhost:7010/api/Courses";
+import api from "./api";
 
 export const GetCoursesSubjectsById = async (courseId) => {
   try {
-    const response = await axios.get(`${API_URL}/coursesDetails/${courseId}`);
+    const response = await api.get(`/Courses/coursesDetails/${courseId}`);
     return response.data;
   } catch (error) {
     console.error(error);

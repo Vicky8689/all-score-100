@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const API_BASE_URL = "https://localhost:7010/api/Common";
+import api from "./api";
 
 export const getCourses = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/courses`);
+    const response = await api.get("/Common/courses");
     return response.data;
   } catch (error) {
     console.error("Error fetching courses:", error);
@@ -14,7 +12,7 @@ export const getCourses = async () => {
 
 export const getFacts = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/facts`);
+    const response = await api.get("/Common/facts");
     return response.data;
   } catch (error) {
     console.error("Error fetching facts:", error);

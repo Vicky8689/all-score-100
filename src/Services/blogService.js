@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const API_URL = "https://localhost:7010/api/Blog";
+import api from "./api";
 
 export const GetBlogById = async (blogId) => {
   try {
-    const response = await axios.get(`${API_URL}/${blogId}`);
+    const response = await api.get(`/Blog/${blogId}`);
     return response.data;
   } catch (error) {
     console.error(error);

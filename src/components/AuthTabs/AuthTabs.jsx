@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate hook
+import { useLocation, useNavigate } from 'react-router-dom';  // Import useNavigate hook
 import '../../assets/bootstrap.min.css';
 
 import { loginUser, registerUser } from "../../Services/authService";
@@ -43,7 +43,8 @@ const handleRegister = async (e) => {
     toast.error("User already exists ❌");
   }
 };
-  const [activeTab, setActiveTab] = useState('login');
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(location.state?.tab || 'login');
   const navigate = useNavigate();  // Initialize the navigate function
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
@@ -57,6 +58,16 @@ const handleLogin = async (e) => {
     if (result && result.statusCode === 200) {
       toast.success("Login successful 🎉");
       localStorage.setItem("user", JSON.stringify(result.data));
+      const token =
+        result.data?.token ||
+        result.data?.accessToken ||
+        result.data?.jwtToken ||
+        result.token ||
+        result.accessToken;
+
+      if (token) {
+        localStorage.setItem("token", token);
+      }
       navigate("/home");
     } else {
       toast.error(result?.message || "Invalid email or password ❌");

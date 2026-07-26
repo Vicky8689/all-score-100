@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
-import "./VideoGallery.css"; // Use updated CSS below
+import "./VideoGallery.css";
 
-const VideoGallery = () => {
-  const location = useLocation();
-  const paperData = location.state?.paperData || [];
+const VideoGallery = ({ paperData = [] }) => {
+
 
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
