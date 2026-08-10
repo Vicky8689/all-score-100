@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate ,useSearchParams } from "react-router-dom";
 import { getMockTestBySubject } from "../../Services/mockTestService";
 import { Container } from "react-bootstrap";
 import { 
@@ -20,6 +20,16 @@ import "./MockTestStartPage.css";
 
 const MockTestStartPage = () => {
   const { testId } = useParams();
+
+const [searchParams] = useSearchParams();
+
+const levelId = Number(
+    searchParams.get("levelId")
+);
+
+const numberOfQuestions = Number(
+    searchParams.get("numberOfQuestions")
+);
   const navigate = useNavigate();
   const [test, setTest] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,7 +65,7 @@ const MockTestStartPage = () => {
   useEffect(() => {
     const fetchTest = async () => {
       try {
-        const data = await getMockTestBySubject(testId);
+        const data = await getMockTestBySubject(testId , levelId, numberOfQuestions);
         setTest(data);
       } catch (error) {
         console.error("Error fetching test", error);
@@ -209,7 +219,7 @@ const MockTestStartPage = () => {
                   </div>
                 </div>
 
-                {/* System Diagnostics */}
+                {/* System Diagnostics
                 <div className="mt-sidebar-box">
                   <h4 className="mt-section-title mb-3" style={{ fontSize: '1.1rem' }}>
                     System Readiness
@@ -232,7 +242,7 @@ const MockTestStartPage = () => {
                       </span>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -254,7 +264,9 @@ const MockTestStartPage = () => {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => navigate(`/mock-test/${testId}/run`)}
+                  onClick={() =>
+
+                     navigate(`/mock-test/${testId}/run?levelId=${levelId}&numberOfQuestions=${numberOfQuestions}`)}
                   className="mt-start-btn mt-pulse-btn btn btn-primary text-white d-flex align-items-center gap-2"
                 >
                   <PlayArrow /> Start Mock Test Now <ArrowForward />

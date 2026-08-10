@@ -1,249 +1,762 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import {
+    useParams,
+    useNavigate,
+    useSearchParams
+} from "react-router-dom";
+
 import "./MockTest.css";
 
+import {
+    getMockTestBySubject
+} from "../../services/examService";
+
+
 const MockTest = () => {
-  const { testId } = useParams();
-  const navigate = useNavigate();
 
-  const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
+    // ==================================================
+    // ROUTE PARAM
+    // ==================================================
 
-  const [timeLeft, setTimeLeft] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [marked, setMarked] = useState({});
-  const [examStarted, setExamStarted] = useState(false);
+    const { testId } = useParams();
 
-  const currentQuestion = questions[currentIndex];
+    const navigate = useNavigate();
 
-  // ================= FETCH API =================
-  useEffect(() => {
-    setLoading(true);
 
-    fetch(`https://localhost:7010/api/Exam/by-subject/${testId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setQuestions(data.questions || []);
-        setTimeLeft((data.durationInMinutes || 10) * 60);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, [testId]);
+    // ==================================================
+    // QUERY PARAMS
+    //
+    
+    // ==================================================
 
-  // ================= START EXAM =================
-  const startExam = () => {
-    // enterFullScreen();
-    setExamStarted(true);
-  };
+    const [searchParams] = useSearchParams();
 
-  // ================= TIMER =================
-  useEffect(() => {
-    if (!examStarted) return;
+    const levelId = Number(
+        searchParams.get("levelId")
+    );
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          handleSubmit();
-          return 0;
+    const numberOfQuestions = Number(
+        searchParams.get("questions")
+    );
+
+
+    // ==================================================
+    // STATE
+    // ==================================================
+
+    const [questions, setQuestions] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+
+    const [timeLeft, setTimeLeft] = useState(0);
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const [answers, setAnswers] = useState({});
+
+    const [marked, setMarked] = useState({});
+
+    const [examStarted, setExamStarted] = useState(false);
+
+
+    // ==================================================
+    // CURRENT QUESTION
+    // ==================================================
+
+    const currentQuestion =
+        questions[currentIndex];
+
+
+    // ==================================================
+    // FETCH MOCK TEST
+    // ==================================================
+
+    useEffect(() => {
+
+        const fetchMockTest = async () => {
+
+            try {
+
+                setLoading(true);
+
+                console.log(
+                    "Fetching Mock Test:",
+                    {
+                        testId,
+                        levelId,
+                        numberOfQuestions
+                    }
+                );
+
+
+                // ==========================================
+                // CALL YOUR API SERVICE
+                // ==========================================
+
+                const data =
+                    await getMockTestBySubject(
+                        testId,
+                        levelId,
+                        numberOfQuestions
+                    );
+
+
+                console.log(
+                    "Mock Test Response:",
+                    data
+                );
+
+
+                // ==========================================
+                // SET QUESTIONS
+                // ==========================================
+
+                setQuestions(
+                    data.questions || []
+                );
+
+
+                // ==========================================
+                // SET TIMER
+                // ==========================================
+
+                setTimeLeft(
+                    (data.durationInMinutes || 10) * 60
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading mock test:",
+                    error
+                );
+
+            } finally {
+
+                setLoading(false);
+
+            }
+
+        };
+
+
+        if (testId) {
+
+            fetchMockTest();
+
         }
-        return prev - 1;
-      });
-    }, 1000);
 
-    return () => clearInterval(timer);
-  }, [examStarted]);
+    }, [
+        testId,
+        levelId,
+        numberOfQuestions
+    ]);
 
- 
-  // ================= EXIT WARNING =================
-  useEffect(() => {
-    const warn = (e) => {
-      e.preventDefault();
-      e.returnValue = "";
+
+    // ==================================================
+    // START EXAM
+    // ==================================================
+
+    const startExam = () => {
+
+        setExamStarted(true);
+
     };
 
-    window.addEventListener("beforeunload", warn);
-    return () => window.removeEventListener("beforeunload", warn);
-  }, []);
 
-  // ================= FORMAT TIME =================
-  const formatTime = (sec) => {
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
-    return `${m}:${s < 10 ? "0" : ""}${s}`;
-  };
+    // ==================================================
+    // TIMER
+    // ==================================================
 
-  // ================= ACTIONS =================
-  const selectOption = (opt) => {
-    if (!currentQuestion) return;
+    useEffect(() => {
 
-    setAnswers({
-      ...answers,
-      [currentQuestion.id]: opt,
-    });
-  };
+        if (!examStarted) {
+            return;
+        }
 
-  const toggleMark = () => {
-    if (!currentQuestion) return;
 
-    setMarked({
-      ...marked,
-      [currentQuestion.id]: !marked[currentQuestion.id],
-    });
-  };
+        const timer = setInterval(() => {
 
-  const next = () => {
-    if (currentIndex < questions.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
+            setTimeLeft((prev) => {
 
-  const prev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
+                if (prev <= 1) {
 
-  const jumpTo = (i) => setCurrentIndex(i);
+                    clearInterval(timer);
 
-  // ================= SUBMIT =================
-const handleSubmit = () => {
-  let score = 0;
-  let correct = 0;
-  let wrong = 0;
-  let attempted = 0;
+                    handleSubmit();
 
-  questions.forEach((q) => {
-    const selected = answers[q.id];
+                    return 0;
+                }
 
-    if (selected) attempted++;
+                return prev - 1;
 
-    if (selected === q.answer) {
-      score++;
-      correct++;
-    } else if (selected) {
-      wrong++;
-    }
-  });
+            });
 
-  navigate("/result", {
-    state: {
-      score,
-      total: questions.length,
-      correct,
-      wrong,
-      attempted,
-      questions,
-      answers,
-    },
-  });
-};
+        }, 1000);
 
-  // ================= LOADING =================
-  if (loading) return <h2>Loading Exam...</h2>;
 
-  // ================= UI =================
-  return (
-    <div className="exam-container">
+        return () => {
 
-      {/* START SCREEN */}
-      {!examStarted ? (
-        <div className="start-screen">
-          <h2>Mock Exam</h2>
-          <p>Test ID: {testId}</p>
-          <p>Total Questions: {questions.length}</p>
-          <p>Time: {Math.floor(timeLeft / 60)} Minutes</p>
+            clearInterval(timer);
 
-          <button className="start-btn" onClick={startExam}>
-            Start Exam
-          </button>
-        </div>
-      ) : (
-        <>
-          {/* HEADER */}
-          <div className="exam-header">
-            <div>
-              <h2>Mock Exam</h2>
-              <p>Test ID: {testId}</p>
+        };
+
+    }, [examStarted]);
+
+
+    // ==================================================
+    // EXIT WARNING
+    // ==================================================
+
+    useEffect(() => {
+
+        const warn = (e) => {
+
+            if (!examStarted) {
+                return;
+            }
+
+            e.preventDefault();
+
+            e.returnValue = "";
+
+        };
+
+
+        window.addEventListener(
+            "beforeunload",
+            warn
+        );
+
+
+        return () => {
+
+            window.removeEventListener(
+                "beforeunload",
+                warn
+            );
+
+        };
+
+    }, [examStarted]);
+
+
+    // ==================================================
+    // FORMAT TIME
+    // ==================================================
+
+    const formatTime = (sec) => {
+
+        const m = Math.floor(sec / 60);
+
+        const s = sec % 60;
+
+        return `${m}:${s < 10 ? "0" : ""}${s}`;
+
+    };
+
+
+    // ==================================================
+    // SELECT OPTION
+    // ==================================================
+
+    const selectOption = (opt) => {
+
+        if (!currentQuestion) {
+            return;
+        }
+
+
+        setAnswers((prev) => ({
+
+            ...prev,
+
+            [currentQuestion.id]: opt
+
+        }));
+
+    };
+
+
+    // ==================================================
+    // MARK QUESTION
+    // ==================================================
+
+    const toggleMark = () => {
+
+        if (!currentQuestion) {
+            return;
+        }
+
+
+        setMarked((prev) => ({
+
+            ...prev,
+
+            [currentQuestion.id]:
+                !prev[currentQuestion.id]
+
+        }));
+
+    };
+
+
+    // ==================================================
+    // NEXT
+    // ==================================================
+
+    const next = () => {
+
+        if (
+            currentIndex <
+            questions.length - 1
+        ) {
+
+            setCurrentIndex(
+                currentIndex + 1
+            );
+
+        }
+
+    };
+
+
+    // ==================================================
+    // PREVIOUS
+    // ==================================================
+
+    const prev = () => {
+
+        if (currentIndex > 0) {
+
+            setCurrentIndex(
+                currentIndex - 1
+            );
+
+        }
+
+    };
+
+
+    // ==================================================
+    // JUMP TO QUESTION
+    // ==================================================
+
+    const jumpTo = (index) => {
+
+        setCurrentIndex(index);
+
+    };
+
+
+    // ==================================================
+    // SUBMIT EXAM
+    // ==================================================
+
+    const handleSubmit = () => {
+
+        let score = 0;
+
+        let correct = 0;
+
+        let wrong = 0;
+
+        let attempted = 0;
+
+
+        // ==========================================
+        // CALCULATE RESULT
+        // ==========================================
+
+        questions.forEach((q) => {
+
+            const selected =
+                answers[q.id];
+
+
+            // Attempted
+            if (selected) {
+
+                attempted++;
+
+            }
+
+
+            // Correct
+            if (selected === q.answer) {
+
+                score++;
+
+                correct++;
+
+            }
+
+            // Wrong
+            else if (selected) {
+
+                wrong++;
+
+            }
+
+        });
+
+
+        console.log(
+            "Exam Result:",
+            {
+                score,
+                total: questions.length,
+                correct,
+                wrong,
+                attempted
+            }
+        );
+
+
+        // ==========================================
+        // NAVIGATE RESULT
+        // ==========================================
+
+        navigate(
+            "/result",
+            {
+                state: {
+
+                    score,
+
+                    total:
+                        questions.length,
+
+                    correct,
+
+                    wrong,
+
+                    attempted,
+
+                    questions,
+
+                    answers
+
+                }
+            }
+        );
+
+    };
+
+
+    // ==================================================
+    // LOADING
+    // ==================================================
+
+    if (loading) {
+
+        return (
+            <div className="loading">
+                Loading Exam...
             </div>
+        );
 
-            <div className="timer">⏱ {formatTime(timeLeft)}</div>
-          </div>
+    }
 
-          {/* BODY */}
-          <div className="exam-body">
 
-            {/* QUESTION */}
-            <div className="question-box">
-              <h3>
-                Q{currentIndex + 1}. {currentQuestion?.question}
-              </h3>
+    // ==================================================
+    // NO QUESTIONS
+    // ==================================================
 
-              <div className="options">
-                {currentQuestion?.options?.map((opt, i) => (
-                  <div
-                    key={i}
-                    className={`option ${
-                      answers[currentQuestion.id] === opt
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() => selectOption(opt)}
-                  >
-                    {opt}
-                  </div>
-                ))}
-              </div>
+    if (!questions.length) {
 
-              <button className="mark-btn" onClick={toggleMark}>
-                {marked[currentQuestion?.id]
-                  ? "Marked ✔"
-                  : "Mark for Review"}
-              </button>
-            </div>
+        return (
+            <div className="no-questions">
 
-            {/* SIDEBAR */}
-            <div className="sidebar">
-              {questions.map((q, i) => (
-                <div
-                  key={q.id}
-                  className={`q-box ${
-                    answers[q.id]
-                      ? "answered"
-                      : marked[q.id]
-                      ? "marked"
-                      : ""
-                  }`}
-                  onClick={() => jumpTo(i)}
+                <h2>
+                    No Questions Found
+                </h2>
+
+                <button
+                    onClick={() => navigate(-1)}
                 >
-                  {i + 1}
-                </div>
-              ))}
+                    Go Back
+                </button>
+
             </div>
-          </div>
+        );
 
-          {/* FOOTER */}
-          <div className="footer">
-            <button onClick={prev} disabled={currentIndex === 0}>
-              Previous
-            </button>
+    }
 
-            {currentIndex === questions.length - 1 ? (
-              <button className="submit" onClick={handleSubmit}>
-                Submit Exam
-              </button>
+
+    // ==================================================
+    // UI
+    // ==================================================
+
+    return (
+
+        <div className="mock-test-container">
+
+
+            {/* ==================================================
+                START SCREEN
+            ================================================== */}
+
+            {!examStarted ? (
+
+                <div className="start-screen">
+
+                    <h2>
+                        Mock Exam
+                    </h2>
+
+
+                    <p>
+                        Test ID: {testId}
+                    </p>
+
+
+                    <p>
+                        Level ID: {levelId}
+                    </p>
+
+
+                    <p>
+                        Total Questions:
+                        {" "}
+                        {questions.length}
+                    </p>
+
+
+                    <p>
+                        Time:
+                        {" "}
+                        {Math.floor(
+                            timeLeft / 60
+                        )}
+                        {" "}
+                        Minutes
+                    </p>
+
+
+                    <button
+                        className="start-btn"
+                        onClick={startExam}
+                    >
+                        Start Exam
+                    </button>
+
+                </div>
+
             ) : (
-              <button onClick={next}>Next</button>
+
+                <>
+
+                    {/* ==================================================
+                        HEADER
+                    ================================================== */}
+
+                    <div className="exam-header">
+
+                        <div>
+
+                            <h2>
+                                Mock Exam
+                            </h2>
+
+
+                            <p>
+                                Test ID:
+                                {" "}
+                                {testId}
+                            </p>
+
+
+                            <p>
+                                Level ID:
+                                {" "}
+                                {levelId}
+                            </p>
+
+                        </div>
+
+
+                        <div className="timer">
+
+                            ⏱ {formatTime(timeLeft)}
+
+                        </div>
+
+                    </div>
+
+
+                    {/* ==================================================
+                        BODY
+                    ================================================== */}
+
+                    <div className="exam-body">
+
+
+                        {/* ==================================================
+                            QUESTION
+                        ================================================== */}
+
+                        <div className="question-box">
+
+                            <h3>
+
+                                Q{currentIndex + 1}.
+                                {" "}
+                                {currentQuestion?.question}
+
+                            </h3>
+
+
+                            {/* OPTIONS */}
+
+                            <div className="options">
+
+                                {currentQuestion?.options?.map(
+                                    (opt, i) => (
+
+                                        <div
+                                            key={i}
+                                            className={`
+                                                option
+                                                ${
+                                                    answers[
+                                                        currentQuestion.id
+                                                    ] === opt
+                                                        ? "selected"
+                                                        : ""
+                                                }
+                                            `}
+                                            onClick={() =>
+                                                selectOption(opt)
+                                            }
+                                        >
+
+                                            {opt}
+
+                                        </div>
+
+                                    )
+                                )}
+
+                            </div>
+
+
+                            {/* MARK */}
+
+                            <button
+                                className="mark-btn"
+                                onClick={toggleMark}
+                            >
+
+                                {marked[
+                                    currentQuestion?.id
+                                ]
+                                    ? "Marked ✔"
+                                    : "Mark for Review"
+                                }
+
+                            </button>
+
+                        </div>
+
+
+                        {/* ==================================================
+                            SIDEBAR
+                        ================================================== */}
+
+                        <div className="sidebar">
+
+                            {questions.map(
+                                (q, i) => (
+
+                                    <div
+                                        key={q.id}
+                                        className={`
+                                            q-box
+                                            ${
+                                                answers[q.id]
+                                                    ? "answered"
+                                                    : marked[q.id]
+                                                    ? "marked"
+                                                    : ""
+                                            }
+                                        `}
+                                        onClick={() =>
+                                            jumpTo(i)
+                                        }
+                                    >
+
+                                        {i + 1}
+
+                                    </div>
+
+                                )
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    {/* ==================================================
+                        FOOTER
+                    ================================================== */}
+
+                    <div className="footer">
+
+
+                        {/* PREVIOUS */}
+
+                        <button
+                            onClick={prev}
+                            disabled={
+                                currentIndex === 0
+                            }
+                        >
+
+                            Previous
+
+                        </button>
+
+
+                        {/* NEXT / SUBMIT */}
+
+                        {currentIndex ===
+                        questions.length - 1 ? (
+
+                            <button
+                                className="submit"
+                                onClick={handleSubmit}
+                            >
+
+                                Submit Exam
+
+                            </button>
+
+                        ) : (
+
+                            <button
+                                onClick={next}
+                            >
+
+                                Next
+
+                            </button>
+
+                        )}
+
+                    </div>
+
+                </>
+
             )}
-          </div>
-        </>
-      )}
-    </div>
-  );
+
+        </div>
+
+    );
+
 };
+
 
 export default MockTest;

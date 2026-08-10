@@ -1,87 +1,200 @@
-import React from 'react';
-import 'katex/dist/katex.min.css';
-import { BlockMath } from 'react-katex';
-const isLatex = (text) => {
-  return typeof text === "string" &&
-    (text.includes("\\int") ||
-     text.includes("\\frac") ||
-     text.includes("\\sqrt") ||
-     text.includes("\\sum") ||
-     text.includes("\\lim") ||
-     text.includes("\\alpha") ||
-     text.includes("^") ||
-     text.includes("_"));
-};
-const QuestionCard = ({ question, index, totalQuestions, selectedOption, onSelect }) => {
-  return (
-    <div className="card border-0 shadow-sm p-4 h-100">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <span className="badge bg-primary px-3 py-2">Question {index + 1} of {totalQuestions}</span>
-        <span className="text-muted small">Max Marks: 4</span>
-      </div>
-<h5 className="mb-4 lh-base fw-bold text-dark">
-  {isLatex(question.question) ? (
-    <BlockMath math={question.question} />
-  ) : (
-    question.question
-  )}
-</h5>
 
-<div className="options-list">
-  {question.options.map((option, i) => (
-    <div
-      key={i}
-      className={`option-item p-3 mb-3 border rounded d-flex align-items-center transition-all ${
-        selectedOption === option
-          ? "border-primary bg-light"
-          : "bg-white"
-      }`}
-      onClick={() => onSelect(question.id, option)}
-      style={{ cursor: "pointer" }}
-    >
-      <div
-        className={`radio-circle me-3 d-flex align-items-center justify-content-center rounded-circle border ${
-          selectedOption === option
-            ? "border-primary bg-primary"
-            : "border-secondary"
-        }`}
-        style={{ width: "20px", height: "20px" }}
-      >
-        {selectedOption === option && (
-          <div
-            className="bg-white rounded-circle"
-            style={{ width: "8px", height: "8px" }}
-          />
-        )}
-      </div>
+import React from "react";
+import MathText from "../Math/MathText";
 
-      <span
-        className={
-          selectedOption === option
-            ? "fw-bold text-primary"
-            : "text-dark"
-        }
-      >
-        {isLatex(option) ? (
-          <BlockMath math={option} />
-        ) : (
-          option
-        )}
-      </span>
-    </div>
-  ))}
-</div>
+const QuestionCard = ({
+    question,
+    index,
+    totalQuestions,
+    selectedOption,
+    onSelect
+}) => {
 
-      <style dangerouslySetInnerHTML={{ __html: `
-        .option-item:hover {
-          background-color: #f8f9fa;
-        }
-        .transition-all {
-          transition: all 0.2s ease-in-out;
-        }
-      `}} />
-    </div>
-  );
+    // ======================================================
+    // SAFETY CHECK
+    // ======================================================
+
+    if (!question) {
+        return null;
+    }
+
+    return (
+        <div>
+
+            {/* ==================================================
+                QUESTION NUMBER
+            ================================================== */}
+
+            <div className="mb-3">
+                <span className="badge bg-primary">
+                    Question {index + 1} of {totalQuestions}
+                </span>
+            </div>
+
+
+            {/* ==================================================
+                QUESTION
+            ================================================== */}
+
+            <div className="question-text mb-4">
+
+                <MathText
+                    className="question-text-content"
+                >
+                    {question.question}
+                </MathText>
+
+            </div>
+
+
+            {/* ==================================================
+                OPTIONS
+            ================================================== */}
+
+            <div className="options-container">
+
+                {question.options?.map(
+                    (option, optionIndex) => {
+
+                        // ------------------------------------------
+                        // Check selected option
+                        // ------------------------------------------
+
+                        const isSelected =
+                            selectedOption === optionIndex;
+
+                        // ------------------------------------------
+                        // Empty option
+                        // ------------------------------------------
+
+                        const isEmpty =
+                            option === null ||
+                            option === undefined ||
+                            String(option).trim() === "";
+
+                        return (
+                            <div
+                                key={optionIndex}
+                                className={`option-item ${
+                                    isSelected
+                                        ? "border-primary"
+                                        : ""
+                                }`}
+                                onClick={() => {
+
+                                    // Don't select empty options
+                                    if (isEmpty) {
+                                        return;
+                                    }
+
+                                    onSelect(
+                                        question.id,
+                                        optionIndex
+                                    );
+                                }}
+                                style={{
+                                    cursor: isEmpty
+                                        ? "default"
+                                        : "pointer",
+
+                                    display: "flex",
+                                    alignItems: "flex-start"
+                                }}
+                            >
+
+                                {/* ==================================================
+                                    RADIO
+                                ================================================== */}
+
+                                <div
+                                    className="radio-circle"
+                                    style={{
+                                        width: "20px",
+                                        height: "20px",
+                                        border: isSelected
+                                            ? "2px solid #8b5cf6"
+                                            : "2px solid #cbd5e1",
+                                        borderRadius: "50%",
+                                        marginRight: "12px",
+                                        marginTop: "4px",
+                                        flexShrink: 0,
+                                        position: "relative"
+                                    }}
+                                >
+
+                                    {isSelected && (
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                width: "10px",
+                                                height: "10px",
+                                                borderRadius: "50%",
+                                                background: "#8b5cf6",
+                                                top: "3px",
+                                                left: "3px"
+                                            }}
+                                        />
+                                    )}
+
+                                </div>
+
+
+                                {/* ==================================================
+                                    OPTION LETTER
+                                ================================================== */}
+
+                                <div
+                                    style={{
+                                        marginRight: "8px",
+                                        fontWeight: "500",
+                                        flexShrink: 0
+                                    }}
+                                >
+                                    {String.fromCharCode(
+                                        65 + optionIndex
+                                    )}.
+                                </div>
+
+
+                                {/* ==================================================
+                                    OPTION CONTENT
+                                ================================================== */}
+
+                                <div
+                                    style={{
+                                        flex: 1,
+                                        minWidth: 0,
+                                        overflow: "hidden"
+                                    }}
+                                >
+
+                                    {isEmpty ? (
+                                        <span
+                                            style={{
+                                                color: "#94a3b8"
+                                            }}
+                                        >
+                                            No option provided
+                                        </span>
+                                    ) : (
+                                        <MathText
+                                            className="option-text-content"
+                                        >
+                                            {option}
+                                        </MathText>
+                                    )}
+
+                                </div>
+
+                            </div>
+                        );
+                    }
+                )}
+
+            </div>
+
+        </div>
+    );
 };
 
 export default QuestionCard;

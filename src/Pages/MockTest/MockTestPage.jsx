@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { getMockTestBySubject, submitExam } from "../../Services/mockTestService";
 import { useTimer } from "../../hooks/useTimer";
 import { useMockTest } from "../../hooks/useMockTest";
@@ -12,6 +12,16 @@ import { toast } from "react-toastify";
 
 const MockTestPage = () => {
   const { testId } = useParams();
+  
+const [searchParams] = useSearchParams();
+
+const levelId = Number(
+    searchParams.get("levelId")
+);
+
+const numberOfQuestions = Number(
+    searchParams.get("numberOfQuestions")
+);
   const navigate = useNavigate();
   const [test, setTest] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,7 +43,7 @@ const MockTestPage = () => {
   useEffect(() => {
     const fetchTest = async () => {
       try {
-        const data = await getMockTestBySubject(testId);
+        const data = await getMockTestBySubject(testId , levelId, numberOfQuestions);
         setTest(data);
       } catch (err) {
         console.error("Failed to load exam:", err);
@@ -43,7 +53,7 @@ const MockTestPage = () => {
       }
     };
     fetchTest();
-  }, [testId]);
+  }, [testId, levelId, numberOfQuestions]);
 
   const onTimeUp = () => {
     handleFinalSubmit();
@@ -66,6 +76,11 @@ const MockTestPage = () => {
   const userId = user?.userID || 101;
 
   const handleFinalSubmit = async () => {
+    if (!test?.id || !test.questions?.length) {
+      toast.error("This examination has no questions to submit.");
+      return;
+    }
+
     setSubmitting(true);
     try {
       const payload = {
@@ -100,12 +115,23 @@ const MockTestPage = () => {
     <p className="text-muted fw-bold">Loading Examination Content...</p>
   </div>;
 
-  const currentQuestion = test.questions[currentQuestionIndex];
+  const questions = Array.isArray(test?.questions) ? test.questions : [];
+  const currentQuestion = questions[currentQuestionIndex];
+
+  if (!currentQuestion) {
+    return (
+      <div className="vh-100 d-flex align-items-center justify-content-center flex-column px-3 text-center">
+        <h5 className="mb-2">No questions available</h5>
+        <p className="text-muted mb-3">This examination does not currently contain any questions.</p>
+        <Button onClick={() => navigate(-1)}>Go Back</Button>
+      </div>
+    );
+  }
   
   const submitSummary = {
     answered: Object.values(status || {}).filter(s => s === 'answered').length,
     review: Object.values(status || {}).filter(s => s === 'review').length,
-    notVisited: (test.questions?.length || 0) - Object.values(status || {}).filter(s => s !== 'not-visited').length
+    notVisited: questions.length - Object.values(status || {}).filter(s => s !== 'not-visited').length
   };
 
   return (
@@ -353,7 +379,7 @@ const MockTestPage = () => {
                <QuestionCard 
                 question={currentQuestion}
                 index={currentQuestionIndex}
-                totalQuestions={test.questions.length}
+                totalQuestions={questions.length}
                 selectedOption={answers[currentQuestion.id]}
                 onSelect={handleAnswer}
                />
@@ -369,8 +395,8 @@ const MockTestPage = () => {
                     </Button>
                     <Button 
                       className="btn-modern-prev-next"
-                      onClick={() => visitQuestion(Math.min(test.questions.length - 1, currentQuestionIndex + 1))}
-                      disabled={currentQuestionIndex === test.questions.length - 1}
+                      onClick={() => visitQuestion(Math.min(questions.length - 1, currentQuestionIndex + 1))}
+                      disabled={currentQuestionIndex === questions.length - 1}
                     >
                       Next
                     </Button>
@@ -398,7 +424,7 @@ const MockTestPage = () => {
                 </div>
                 
                 <QuestionNavigator 
-                  questions={test.questions}
+                  questions={questions}
                   currentPageIndex={currentQuestionIndex}
                   status={status}
                   onNavigate={visitQuestion}

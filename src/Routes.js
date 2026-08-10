@@ -27,6 +27,7 @@ import MockTestPage from "./Pages/MockTest/MockTestPage";
 import MockTestResultPage from "./Pages/MockTest/ResultPage";
 import SolutionReviewPage from "./Pages/MockTest/SolutionReviewPage";
 import CreateExam from "./components/Admin/Exame/CreateExam";
+import CreateExamWord from "./components/Admin/Exame/CreateExamWord";
 const routes = createBrowserRouter([
   {
     element: <AppShell />,
@@ -128,7 +129,11 @@ const routes = createBrowserRouter([
   {
         path: "admin/exams/create-from-excel",
         element: <CreateExam />,
-      },
+  },
+  {
+        path: "admin/exams/create-from-word",
+        element: <CreateExamWord />,
+  }
 
     ],
   },
