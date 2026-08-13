@@ -1,0 +1,309 @@
+/* ======================================================
+   QUESTION CARD
+====================================================== */
+
+.question-text {
+    width: 100%;
+    text-align: left;
+   
+}
+
+.question-text-content {
+    width: 100%;
+    text-align: left !important;
+}
+
+
+/* ======================================================
+   OPTIONS CONTAINER
+====================================================== */
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    gap: 0;
+top: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    margin: 0px;
+}
+
+
+/* ======================================================
+   OPTION
+   NO RECTANGULAR BORDER / BOX
+====================================================== */
+
+.options-container .option-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    width: 100%;
+    margin-left: 10px;
+    margin: 0;
+    padding: 9px 9px !important;
+
+    /* Remove all box styling */
+    border: none !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+
+    border-radius: 0 !important;
+
+    outline: none !important;
+
+    box-shadow: none !important;
+
+    background: transparent !important;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    box-sizing: border-box;
+}
+
+
+/* ======================================================
+   OPTION HOVER
+   NO BORDER / NO BOX
+====================================================== */
+
+
+
+
+/* ======================================================
+   SELECTED OPTION
+   NO RECTANGULAR BORDER
+====================================================== */
+
+.options-container .option-item.selected {
+    border: none !important;
+    border-width: 0 !important;
+    border-style: none !important;
+
+    border-radius: 0 !important;
+
+    outline: none !important;
+
+    box-shadow: none !important;
+
+    background: transparent !important;
+}
+
+
+/* ======================================================
+   SELECTED + HOVER
+====================================================== */
+
+.options-container .option-item.selected:hover {
+
+}
+
+
+/* ======================================================
+   OPTION FOCUS
+====================================================== */
+
+.options-container .option-item:focus,
+.options-container .option-item:focus-visible,
+.options-container .option-item:active {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+
+    background: transparent !important;
+}
+
+
+/* ======================================================
+   RADIO CIRCLE
+   THIS IS THE ONLY BORDER
+====================================================== */
+
+.options-container .radio-circle {
+    width: 20px;
+    height: 20px;
+
+    min-width: 20px;
+    min-height: 20px;
+
+    border: 2px solid #cbd5e1 !important;
+    border-radius: 50% !important;
+
+    margin-right: 12px;
+    /* margin-top: 3px; */
+
+    padding: 0;
+
+    flex-shrink: 0;
+
+    position: relative;
+
+    box-sizing: border-box;
+
+    background: transparent;
+}
+
+
+/* ======================================================
+   SELECTED RADIO
+====================================================== */
+
+.options-container
+.option-item.selected
+.radio-circle {
+    border-color: #8b5cf6 !important;
+}
+
+
+/* ======================================================
+   INNER RADIO
+====================================================== */
+
+.options-container .radio-inner {
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    top: 3px;
+    left: 3px;
+
+    border-radius: 50%;
+
+    background: #8b5cf6;
+
+    box-sizing: border-box;
+}
+
+
+/* ======================================================
+   OPTION LETTER
+====================================================== */
+
+.options-container .option-letter {
+    margin-right: 8px;
+
+    padding: 0;
+
+    font-weight: 500;
+
+    flex-shrink: 0;
+
+    line-height: 20px;
+
+    border: none !important;
+    background: transparent !important;
+}
+
+
+/* ======================================================
+   OPTION CONTENT
+====================================================== */
+
+.options-container .option-content {
+    flex: 1;
+
+    min-width: 0;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    text-align: left;
+
+    border: none !important;
+    background: transparent !important;
+}
+
+
+/* ======================================================
+   OPTION TEXT
+====================================================== */
+
+.options-container .option-text-content {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    text-align: left !important;
+
+    border: none !important;
+    background: transparent !important;
+}
+
+
+/* ======================================================
+   EMPTY OPTION
+====================================================== */
+
+.options-container .empty-option {
+    cursor: default;
+}
+
+.options-container .empty-text {
+    color: #94a3b8;
+}
+
+
+/* ======================================================
+   KATEX
+====================================================== */
+
+.katex {
+    text-align: left !important;
+}
+
+.katex-display {
+    text-align: left !important;
+
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.katex-html {
+    text-align: left !important;
+}
+
+
+/* ======================================================
+   REMOVE ANY POSSIBLE CHILD BOX
+====================================================== */
+
+.options-container .option-item > * {
+    box-shadow: none !important;
+}
+
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 768px) {
+
+    .options-container {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .options-container .option-item {
+        width: 100%;
+
+        padding: 12px 0;
+    }
+
+    .options-container .option-content {
+        min-width: 0;
+    }
+}

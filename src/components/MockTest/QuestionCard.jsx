@@ -1,6 +1,7 @@
 
 import React from "react";
 import MathText from "../Math/MathText";
+import "./QuestionCard.css";
 
 const QuestionCard = ({
     question,
@@ -41,7 +42,7 @@ const QuestionCard = ({
                 <MathText
                     className="question-text-content"
                 >
-                    {question.question}
+                  {index + 1} ___ {question.question}
                 </MathText>
 
             </div>
@@ -56,16 +57,8 @@ const QuestionCard = ({
                 {question.options?.map(
                     (option, optionIndex) => {
 
-                        // ------------------------------------------
-                        // Check selected option
-                        // ------------------------------------------
-
                         const isSelected =
                             selectedOption === optionIndex;
-
-                        // ------------------------------------------
-                        // Empty option
-                        // ------------------------------------------
 
                         const isEmpty =
                             option === null ||
@@ -77,12 +70,11 @@ const QuestionCard = ({
                                 key={optionIndex}
                                 className={`option-item ${
                                     isSelected
-                                        ? "border-primary"
+                                        ? "selected"
                                         : ""
-                                }`}
+                                } ${isEmpty ? "empty-option" : ""}`}
                                 onClick={() => {
 
-                                    // Don't select empty options
                                     if (isEmpty) {
                                         return;
                                     }
@@ -92,88 +84,34 @@ const QuestionCard = ({
                                         optionIndex
                                     );
                                 }}
-                                style={{
-                                    cursor: isEmpty
-                                        ? "default"
-                                        : "pointer",
-
-                                    display: "flex",
-                                    alignItems: "flex-start"
-                                }}
                             >
 
-                                {/* ==================================================
-                                    RADIO
-                                ================================================== */}
+                                {/* RADIO */}
 
-                                <div
-                                    className="radio-circle"
-                                    style={{
-                                        width: "20px",
-                                        height: "20px",
-                                        border: isSelected
-                                            ? "2px solid #8b5cf6"
-                                            : "2px solid #cbd5e1",
-                                        borderRadius: "50%",
-                                        marginRight: "12px",
-                                        marginTop: "4px",
-                                        flexShrink: 0,
-                                        position: "relative"
-                                    }}
-                                >
+                                <div className="radio-circle">
 
                                     {isSelected && (
-                                        <div
-                                            style={{
-                                                position: "absolute",
-                                                width: "10px",
-                                                height: "10px",
-                                                borderRadius: "50%",
-                                                background: "#8b5cf6",
-                                                top: "3px",
-                                                left: "3px"
-                                            }}
-                                        />
+                                        <div className="radio-inner" />
                                     )}
 
                                 </div>
 
 
-                                {/* ==================================================
-                                    OPTION LETTER
-                                ================================================== */}
+                                {/* OPTION LETTER */}
 
-                                <div
-                                    style={{
-                                        marginRight: "8px",
-                                        fontWeight: "500",
-                                        flexShrink: 0
-                                    }}
-                                >
+                                <div className="option-letter">
                                     {String.fromCharCode(
                                         65 + optionIndex
                                     )}.
                                 </div>
 
 
-                                {/* ==================================================
-                                    OPTION CONTENT
-                                ================================================== */}
+                                {/* OPTION CONTENT */}
 
-                                <div
-                                    style={{
-                                        flex: 1,
-                                        minWidth: 0,
-                                        overflow: "hidden"
-                                    }}
-                                >
+                                <div className="option-content">
 
                                     {isEmpty ? (
-                                        <span
-                                            style={{
-                                                color: "#94a3b8"
-                                            }}
-                                        >
+                                        <span className="empty-text">
                                             No option provided
                                         </span>
                                     ) : (
