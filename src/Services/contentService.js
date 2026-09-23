@@ -20,9 +20,9 @@ export const getNotesPdf = async (optionTopicId, srNo) => {
   }
 };
 
-export const getLectureVideo = async (optionTopicId) => {
+export const getLectureVideo = async (optionTopicId, optionId) => {
   try {
-    const response = await api.get(`/Content/LectureVideo/${optionTopicId}`);
+    const response = await api.get(`/Content/LectureVideo/${optionTopicId}/${optionId}`);
     return response.data;
   } catch (error) {
     console.error(error);

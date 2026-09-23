@@ -90,7 +90,7 @@ const QUESTION_LEVELS = [
 // Custom Table
 // ======================================================
 
-const CustomTable = ({ data }) => {
+const CustomTable = ({ data ,optionId }) => {
 
     const navigate = useNavigate();
 
@@ -141,7 +141,7 @@ const CustomTable = ({ data }) => {
 
         console.log('Video Row:', row);
 
-        navigate(`/videos/${row.id}`);
+        navigate(`/videos/${row.id}/${optionId}`);
     };
 
 

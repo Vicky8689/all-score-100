@@ -4,9 +4,12 @@ import VideoGallery from "../components/VideoLectures/VideoGallery";
 import { getLectureVideo } from "../Services/contentService";  // update path
 
 const VideoPage = () => {
-  const { optionTopicId } = useParams();
+  const { optionTopicId ,optionId} = useParams();
 
   const [paperData, setPaperData] = useState([]);
+  const [previousId, setPreviousId] = useState(null);
+const [nextId, setNextId] = useState(null);
+const [currentId, setCurrentId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -15,13 +18,15 @@ const VideoPage = () => {
       try {
         setLoading(true);
 
-        const response = await getLectureVideo(optionTopicId);
-
+        const response = await getLectureVideo(optionTopicId, optionId);
+        console.log("Fetched video data:", response);
         // If API returns array directly
-        setPaperData(response || []);
-
+       // setPaperData(response || []);
         // If API returns { data: [...] }
-        // setPaperData(response.data || []);
+         setPaperData(response.data.data || []);
+      setPreviousId(response.data.previousId);
+      setCurrentId(response.data.currentId);
+      setNextId(response.data.nextId);
 
       } catch (err) {
         console.error(err);
@@ -34,7 +39,7 @@ const VideoPage = () => {
     if (optionTopicId) {
       fetchVideos();
     }
-  }, [optionTopicId]);
+  }, [optionTopicId, optionId]);
 
   if (loading) {
     return <div>Loading videos...</div>;
@@ -44,7 +49,12 @@ const VideoPage = () => {
     return <div>{error}</div>;
   }
 
-  return <VideoGallery paperData={paperData} />;
+  return <VideoGallery paperData={paperData}
+  previousId={previousId}
+  currentId={currentId}
+  nextId={nextId}
+  optionId={optionId}
+  />;
 };
 
 export default VideoPage;

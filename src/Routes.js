@@ -28,6 +28,7 @@ import MockTestResultPage from "./Pages/MockTest/ResultPage";
 import SolutionReviewPage from "./Pages/MockTest/SolutionReviewPage";
 import CreateExam from "./components/Admin/Exame/CreateExam";
 import CreateExamWord from "./components/Admin/Exame/CreateExamWord";
+import CreateVideoLecture from "./components/VideoLectures/CreateVideoLecture";
 const routes = createBrowserRouter([
   {
     element: <AppShell />,
@@ -96,7 +97,7 @@ const routes = createBrowserRouter([
       },
 
       {
-        path: "/videos/:optionTopicId",
+        path: "/videos/:optionTopicId/:optionId",
         element: <VideoPage />,
       },
 
@@ -133,6 +134,10 @@ const routes = createBrowserRouter([
   {
         path: "admin/exams/create-from-word",
         element: <CreateExamWord />,
+  },
+  {
+        path: "admin/exams/add-Lecture-video",
+        element: <CreateVideoLecture />,
   }
 
     ],

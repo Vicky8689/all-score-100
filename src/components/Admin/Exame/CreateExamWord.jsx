@@ -20,6 +20,7 @@ export default function CreateExam() {
     loadCourses();
   }, []);
 
+  
   async function loadCourses() {
     const res = await axios.get(`${API}/Maseter/courses`);
     setCourses(res.data);

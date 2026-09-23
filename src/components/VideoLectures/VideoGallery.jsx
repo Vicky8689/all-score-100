@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import "./VideoGallery.css";
+import { useNavigate } from "react-router-dom";
+const VideoGallery = ({
+  paperData = [],
+  previousId,
+  currentId,
+  nextId,
+  optionId
+}) => {
 
-const VideoGallery = ({ paperData = [] }) => {
-
-
+  const navigate = useNavigate();
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -15,9 +21,15 @@ const VideoGallery = ({ paperData = [] }) => {
 
   const currentSection = paperData[currentSectionIndex];
   const currentVideo = currentSection?.videos[currentVideoIndex];
-
   if (!currentSection || !currentVideo) {
-    return <h2>Invalid data format</h2>;
+
+return (
+  <div className="no-lectures">
+    <div className="no-lectures-icon">📚</div>
+    <h2>No Lectures Found</h2>
+    <p>There are no lectures available for this course yet.</p>
+  </div>
+);
   }
 
   const handleVideoClick = (index) => {
@@ -27,17 +39,20 @@ const VideoGallery = ({ paperData = [] }) => {
   };
 
   const goToNextSection = () => {
-    setCurrentSectionIndex((prevIndex) => (prevIndex + 1) % paperData.length);
-    setCurrentVideoIndex(0);
+    console.log("Next Section ID:", nextId);
+    if (nextId) {
+      setIsLoading(true);
+      navigate(`/videos/${nextId}/${optionId}`);
+    }
   };
 
   const goToPreviousSection = () => {
-    setCurrentSectionIndex((prevIndex) =>
-      prevIndex === 0 ? paperData.length - 1 : prevIndex - 1
-    );
-    setCurrentVideoIndex(0);
+    console.log("Previous Section ID:", previousId);
+    if (previousId) {
+      setIsLoading(true);
+      navigate(`/videos/${previousId}/${optionId}`);
+    }
   };
-
   const extractYouTubeID = (url) => {
     const regex = /(?:youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([^\s?&]+)/;
     const match = url.match(regex);
@@ -68,12 +83,12 @@ const VideoGallery = ({ paperData = [] }) => {
           ></iframe>
         </div>
         <div className="video-action-buttons">
-  <h4 className="video-title">{currentVideo.title}</h4>
-  <button>👍 Like</button>
-  <button>👎 Dislike</button>
-  <button>💬 Comment</button>
-  <button>📄 Download PDF</button>
-</div>
+          <h4 className="video-title">{currentVideo.title}</h4>
+          <button>👍 Like</button>
+          <button>👎 Dislike</button>
+          <button>💬 Comment</button>
+          <button>📄 Download PDF</button>
+        </div>
 
       </div>
 
@@ -102,9 +117,30 @@ const VideoGallery = ({ paperData = [] }) => {
         </div>
         {/* Navigation Buttons */}
         <div className="video-actions">
-          <button onClick={goToPreviousSection}>⏮ Prev Chapter</button>
-          <button onClick={goToNextSection}>Next Chapter ⏭</button>
-        </div>
+
+  <button
+    onClick={() => {
+      console.log("PREVIOUS BUTTON CLICKED");
+      console.log("previousId =", previousId);
+      console.log("optionId =", optionId);
+      goToPreviousSection();
+    }}
+  >
+    ⏮ Prev Chapter
+  </button>
+
+  <button
+    onClick={() => {
+      console.log("NEXT BUTTON CLICKED");
+      console.log("nextId =", nextId);
+      console.log("optionId =", optionId);
+      goToNextSection();
+    }}
+  >
+    Next Chapter ⏭
+  </button>
+
+</div>
       </div>
     </div>
   );

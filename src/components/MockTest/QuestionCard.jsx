@@ -36,16 +36,13 @@ const QuestionCard = ({
             {/* ==================================================
                 QUESTION
             ================================================== */}
+<div className="question-text mb-4">
+    <span className="question-number">{index + 1}.</span>
 
-            <div className="question-text mb-4">
-
-                <MathText
-                    className="question-text-content"
-                >
-                  {index + 1} ___ {question.question}
-                </MathText>
-
-            </div>
+    <MathText className="question-text-content">
+        {question.question}
+    </MathText>
+</div>
 
 
             {/* ==================================================

@@ -4,13 +4,83 @@
 
 .question-text {
     width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 6px;
+
     text-align: left;
-   
+
+    /* Card */
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
+    /* 3D raised effect */
+    box-shadow:
+        0 2px 4px rgba(15, 23, 42, 0.08),
+        0 6px 12px rgba(15, 23, 42, 0.08),
+        0 12px 24px rgba(15, 23, 42, 0.06);
+
+    padding: 18px 20px;
+
+    box-sizing: border-box;
+
+    /* Smooth hover */
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
+
+/* ======================================================
+   QUESTION CARD HOVER
+====================================================== */
+
+.question-text:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 3px 6px rgba(15, 23, 42, 0.10),
+        0 8px 16px rgba(15, 23, 42, 0.10),
+        0 16px 30px rgba(15, 23, 42, 0.08);
+}
+
+
+/* ======================================================
+   QUESTION NUMBER
+====================================================== */
+
+.question-number {
+    flex-shrink: 0;
+
+    font-weight: 600;
+
+    line-height: 1.5;
+
+    white-space: nowrap;
+}
+
+
+/* ======================================================
+   QUESTION CONTENT
+====================================================== */
+
 .question-text-content {
+    flex: 1;
+
+    min-width: 0;
+
     width: 100%;
+
+    margin: 0;
+    padding: 0;
+
     text-align: left !important;
+
+    line-height: 1.5;
 }
 
 
@@ -23,11 +93,13 @@
     flex-direction: column;
 
     width: 100%;
+
     gap: 0;
-top: 0;
+
     margin: 0 !important;
     padding: 0 !important;
-    margin: 0px;
+
+    box-sizing: border-box;
 }
 
 
@@ -38,15 +110,17 @@ top: 0;
 
 .options-container .option-item {
     display: flex;
+
     align-items: flex-start;
     justify-content: flex-start;
 
     width: 100%;
-    margin-left: 10px;
+
     margin: 0;
+
     padding: 9px 9px !important;
 
-    /* Remove all box styling */
+    /* Remove box styling */
     border: none !important;
     border-width: 0 !important;
     border-style: none !important;
@@ -70,10 +144,18 @@ top: 0;
 
 /* ======================================================
    OPTION HOVER
-   NO BORDER / NO BOX
+   NO RECTANGULAR BOX
 ====================================================== */
 
+.options-container .option-item:hover {
+    border: none !important;
 
+    outline: none !important;
+
+    box-shadow: none !important;
+
+    background: transparent !important;
+}
 
 
 /* ======================================================
@@ -83,6 +165,7 @@ top: 0;
 
 .options-container .option-item.selected {
     border: none !important;
+
     border-width: 0 !important;
     border-style: none !important;
 
@@ -101,7 +184,13 @@ top: 0;
 ====================================================== */
 
 .options-container .option-item.selected:hover {
+    border: none !important;
 
+    outline: none !important;
+
+    box-shadow: none !important;
+
+    background: transparent !important;
 }
 
 
@@ -113,7 +202,9 @@ top: 0;
 .options-container .option-item:focus-visible,
 .options-container .option-item:active {
     border: none !important;
+
     outline: none !important;
+
     box-shadow: none !important;
 
     background: transparent !important;
@@ -133,10 +224,10 @@ top: 0;
     min-height: 20px;
 
     border: 2px solid #cbd5e1 !important;
+
     border-radius: 50% !important;
 
     margin-right: 12px;
-    /* margin-top: 3px; */
 
     padding: 0;
 
@@ -147,6 +238,15 @@ top: 0;
     box-sizing: border-box;
 
     background: transparent;
+}
+
+
+/* ======================================================
+   RADIO HOVER
+====================================================== */
+
+.options-container .option-item:hover .radio-circle {
+    border-color: #a78bfa !important;
 }
 
 
@@ -198,6 +298,7 @@ top: 0;
     line-height: 20px;
 
     border: none !important;
+
     background: transparent !important;
 }
 
@@ -221,6 +322,7 @@ top: 0;
     text-align: left;
 
     border: none !important;
+
     background: transparent !important;
 }
 
@@ -237,7 +339,10 @@ top: 0;
 
     text-align: left !important;
 
+    line-height: 1.5;
+
     border: none !important;
+
     background: transparent !important;
 }
 
@@ -249,6 +354,7 @@ top: 0;
 .options-container .empty-option {
     cursor: default;
 }
+
 
 .options-container .empty-text {
     color: #94a3b8;
@@ -263,6 +369,7 @@ top: 0;
     text-align: left !important;
 }
 
+
 .katex-display {
     text-align: left !important;
 
@@ -270,13 +377,14 @@ top: 0;
     margin-right: 0 !important;
 }
 
+
 .katex-html {
     text-align: left !important;
 }
 
 
 /* ======================================================
-   REMOVE ANY POSSIBLE CHILD BOX
+   REMOVE CHILD BOXES
 ====================================================== */
 
 .options-container .option-item > * {
@@ -290,20 +398,92 @@ top: 0;
 
 @media (max-width: 768px) {
 
+    /* ------------------------------------------
+       QUESTION CARD
+    ------------------------------------------ */
+
+    .question-text {
+        width: 100%;
+
+        padding: 14px 15px;
+
+        gap: 5px;
+
+        border-radius: 10px;
+    }
+
+
+    /* ------------------------------------------
+       QUESTION NUMBER
+    ------------------------------------------ */
+
+    .question-number {
+        font-weight: 600;
+
+        line-height: 1.5;
+    }
+
+
+    /* ------------------------------------------
+       QUESTION CONTENT
+    ------------------------------------------ */
+
+    .question-text-content {
+        min-width: 0;
+
+        line-height: 1.5;
+    }
+
+
+    /* ------------------------------------------
+       OPTIONS
+    ------------------------------------------ */
+
     .options-container {
         width: 100%;
 
         display: flex;
+
         flex-direction: column;
     }
+
 
     .options-container .option-item {
         width: 100%;
 
-        padding: 12px 0;
+        padding: 12px 0 !important;
     }
+
+
+    /* ------------------------------------------
+       OPTION CONTENT
+    ------------------------------------------ */
 
     .options-container .option-content {
         min-width: 0;
+    }
+
+
+    /* ------------------------------------------
+       RADIO
+    ------------------------------------------ */
+
+    .options-container .radio-circle {
+        width: 19px;
+        height: 19px;
+
+        min-width: 19px;
+        min-height: 19px;
+
+        margin-right: 10px;
+    }
+
+
+    .options-container .radio-inner {
+        width: 9px;
+        height: 9px;
+
+        top: 3px;
+        left: 3px;
     }
 }

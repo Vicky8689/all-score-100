@@ -47,7 +47,9 @@ console.log(contentData);
     <>
       {/* <Navbar /> */}
       <div className="form-container">
-        <CustomTable data={contentData} />
+        <CustomTable data={contentData} 
+        optionId={optionData.optionId}
+        />
       </div>
     </>
   );
