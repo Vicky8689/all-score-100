@@ -115,7 +115,7 @@ The application uses **React Router DOM v6** with a nested strategy:
 ---
 
 ## 7. API Analysis
-- **Base URL:** `https://localhost:7010/api`
+- **Base URL:** `http://localhost:5224/api`
 - **Endpoints:**
   - `/auth/login`, `/auth/register`
   - `/Common/courses`, `/Common/facts`

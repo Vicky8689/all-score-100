@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API = "https://localhost:7010/api";
+const API = "http://localhost:5224/api";
 
 export default function CreateVideoLecture() {
   const [courses, setCourses] = useState([]);
